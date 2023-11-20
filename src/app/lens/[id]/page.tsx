@@ -23,7 +23,7 @@ export default function LensEmbed({ params }: { params: { id: any } }) {
       }}
     >
       <iframe
-        src={`http://app.macha.ai/embed?id=${params.id}`}
+        src={`https://app.macha.ai/embed?id=${params.id}`}
         height={"80%"}
         width={"80%"}
       />
