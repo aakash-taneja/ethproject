@@ -81,6 +81,7 @@ const MusicPlayer = ({ audioUrl, colorMode }: Props) => {
       display={"flex"}
       justifyContent={"space-between"}
       marginTop={style.margin.sm}
+      width={"100%"}
     >
       {isLoading ? (
         <Loader size="sm" />
@@ -102,7 +103,7 @@ const MusicPlayer = ({ audioUrl, colorMode }: Props) => {
         value={currentTime}
         onChange={handleSliderChange}
       >
-        <SliderTrack bg={colorMode == "dark" ? "#000000" : "#ddd"}>
+        <SliderTrack bg={colorMode == "dark" ? "#ddd" : "#ddd"}>
           <SliderFilledTrack />
         </SliderTrack>
         <SliderThumb />

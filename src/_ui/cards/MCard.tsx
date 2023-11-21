@@ -93,7 +93,7 @@ const MCard = ({
   return (
     <Box
       height={cardHeight ? cardHeight : "auto"}
-      borderRadius={gStyle.card.borderRadius.button}
+      borderRadius={"5px"}
       background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
       padding={style.card.padding.default}
       // marginRight={style.margin["sm"]}
@@ -158,41 +158,47 @@ const MCard = ({
         </FlexRow>
       )}
 
-      {image && (
-        <div
-          style={{
-            height: "60%",
-            display: "flex",
-            justifyContent: "center",
-            // marginBottom: `${style.margin.sm}`,
-          }}
-        >
-          <Image
-            src={helperIPFS(image)}
-            alt="coverImage"
-            width="100%"
-            h="100%"
-            // objectFit={"cover"}
-            borderRadius={gStyle.card.borderRadius.default}
-          />
-        </div>
-      )}
+      <FlexColumn height="auto" vrAlign="flex-start">
+        {image && (
+          <div
+            style={{
+              height: "60%",
+              display: "flex",
+              justifyContent: "center",
+              // marginBottom: `${style.margin.sm}`,
+            }}
+          >
+            <Image
+              src={helperIPFS(image)}
+              alt="coverImage"
+              width="100%"
+              h="100%"
+              // objectFit={"cover"}
+              borderRadius={gStyle.card.borderRadius.default}
+            />
+          </div>
+        )}
+      </FlexColumn>
 
-      {musicplayer && (
-        <>
-          {" "}
-          <MusicPlayer
-            key={musicplayer}
-            audioUrl={`https://arweave.net/${musicplayer.substr(
-              5,
-              musicplayer.length - 5
-            )}`}
-            colorMode={colorMode}
-          />
-        </>
-      )}
-
-      <FlexColumn height="auto" vrAlign="flex-start" padding="3% 0%">
+      <FlexColumn
+        height={action_name ? "20%" : "35%"}
+        vrAlign="flex-start"
+        padding="1% 0%"
+        width="100%"
+      >
+        {musicplayer && (
+          <>
+            {" "}
+            <MusicPlayer
+              key={musicplayer}
+              audioUrl={`https://arweave.net/${musicplayer.substr(
+                5,
+                musicplayer.length - 5
+              )}`}
+              colorMode={colorMode}
+            />
+          </>
+        )}
         {title && (
           <Text
             color={colorMode == "light" ? "#282828" : ""}
@@ -240,12 +246,14 @@ const MCard = ({
         {/* </Box> */}
       </FlexColumn>
       {action_name && (
-        <ButtonNative
-          text={action_name}
-          variant="state_brand"
-          width="100%"
-          marginTop="sm"
-        />
+        <FlexColumn height="15%">
+          <ButtonNative
+            text={action_name}
+            variant="state_brand"
+            width="100%"
+            marginTop="sm"
+          />
+        </FlexColumn>
       )}
     </Box>
   );
