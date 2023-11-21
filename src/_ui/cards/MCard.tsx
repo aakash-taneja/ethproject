@@ -187,6 +187,7 @@ const MCard = ({
               5,
               musicplayer.length - 5
             )}`}
+            colorMode={colorMode}
           />
         </>
       )}

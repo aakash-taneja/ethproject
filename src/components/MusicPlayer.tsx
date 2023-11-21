@@ -16,9 +16,10 @@ import React, { useState, useEffect, useRef } from "react";
 
 type Props = {
   audioUrl: string;
+  colorMode?: string;
 };
 
-const MusicPlayer = ({ audioUrl }: Props) => {
+const MusicPlayer = ({ audioUrl, colorMode }: Props) => {
   //console.log("audioUrl", audioUrl);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,8 +27,6 @@ const MusicPlayer = ({ audioUrl }: Props) => {
   const [currentTime, setCurrentTime] = useState(0);
   const toast = useToast();
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
-
-  const colorMode = useColorMode();
 
   useEffect(() => {
     const newAudio = new Audio(audioUrl);
