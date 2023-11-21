@@ -26,7 +26,7 @@ const Index = () => {
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
         cardHeight="100vh"
         colorMode={router.query.theme}
-        // action_name="Collect"
+        action_name="Collect"
       />
     </FlexColumn>
   );
