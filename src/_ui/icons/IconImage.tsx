@@ -1,9 +1,6 @@
-import { StyledIcon } from "@/styles/StyledComponents";
-import React from "react";
-import { IKImage } from "imagekitio-react";
-import { style as gStyle } from "../../styles/StyledConstants";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { Image } from "@chakra-ui/react";
+import { style as gStyle } from "../../styles/StyledConstants";
 
 type Props = {
   slug?: string;

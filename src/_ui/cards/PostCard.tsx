@@ -2,7 +2,7 @@ import ButtonNative from "@/_ui/buttons/ButtonNative";
 import FlexColumn from "@/_ui/flex/FlexColumn";
 import FlexRow from "@/_ui/flex/FlexRow";
 import TagNative from "@/_ui/tag/TagNative";
-import MusicPlayer from "@/components/studio/MusicPlayer";
+import MusicPlayer from "@/components/MusicPlayer";
 import { helperIPFS, truncateAddress, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { Avatar, Box, Image, Text, useColorMode } from "@chakra-ui/react";

@@ -16,15 +16,6 @@ const Index = () => {
   }, [router.query.id]);
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
-      {/* <PostCard
-        image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
-        metaName={hookMeta?.metaData?.meta?.slug}
-        slug={hookMeta?.metaData?.meta?.slug}
-        description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
-        title={hookMeta?.metaData?.meta?.data?.ipfs?.contentURI?.name}
-        owner_name={hookMeta?.metaData?.metaOwner}
-        width="100%"
-      /> */}
       <MCard
         music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
