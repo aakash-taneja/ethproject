@@ -182,6 +182,7 @@ const GlobalIcons: any = {
   "icon-add": "/assets/icons/base-blue-add.svg",
   "logo-Lens": "/assets/icons/Lens.svg",
   "logo-Macha": "/assets/metawork.svg",
+  "logo-dark-Macha": "/assets/macha-image-black-text.svg",
   "logo-Macha-circular": "/assets/metawork-circular.svg",
   "logo-Farcaster": "/Studio-Logos/farcaster.svg",
   "logo-Poap": "/assets/icons/POAP.svg",

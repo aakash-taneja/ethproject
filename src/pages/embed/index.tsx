@@ -14,6 +14,7 @@ const Index = () => {
       hookMeta._fetch(router.query.id);
     }
   }, [router.query.id]);
+
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
       <MCard
@@ -24,6 +25,7 @@ const Index = () => {
         slug={hookMeta?.metaData?.meta?.slug}
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
         cardHeight="100vh"
+        colorMode={router.query.theme}
       />
     </FlexColumn>
   );

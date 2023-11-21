@@ -9,6 +9,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  useColorMode,
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
@@ -25,6 +26,8 @@ const MusicPlayer = ({ audioUrl }: Props) => {
   const [currentTime, setCurrentTime] = useState(0);
   const toast = useToast();
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const colorMode = useColorMode();
 
   useEffect(() => {
     const newAudio = new Audio(audioUrl);
@@ -100,7 +103,7 @@ const MusicPlayer = ({ audioUrl }: Props) => {
         value={currentTime}
         onChange={handleSliderChange}
       >
-        <SliderTrack>
+        <SliderTrack bg={colorMode == "dark" ? "#000000" : "#ddd"}>
           <SliderFilledTrack />
         </SliderTrack>
         <SliderThumb />

@@ -31,6 +31,7 @@ type Props = {
   musicplayer?: any;
   shadowOnHover?: any;
   showMore?: boolean;
+  colorMode?: any;
 };
 
 const MCard = ({
@@ -53,6 +54,7 @@ const MCard = ({
   musicplayer,
   shadowOnHover = true,
   showMore,
+  colorMode,
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -76,7 +78,17 @@ const MCard = ({
   const handleAudioEnded = () => {
     setIsPlaying(false); // Update isPlaying to false when audio ends
   };
-  const { colorMode } = useColorMode();
+
+  // console.log("theme is ", router.asPath);
+  // if (router.query.theme == "dark") {
+  //   toggleColorMode();
+  // }
+  console.log(
+    "color mode is ",
+    colorMode,
+    "type of colorMode",
+    typeof colorMode
+  );
 
   return (
     <Box
@@ -110,7 +122,16 @@ const MCard = ({
         vrAlign="center"
         marginBottom="sm"
       >
-        <Image src="/assets/MACHALogo.svg" alt="logo" width={106} height={39} />
+        <Image
+          src={
+            colorMode == "light"
+              ? GlobalIcons["logo-dark-Macha"]
+              : "/assets/MACHALogo.svg"
+          }
+          alt="logo"
+          width={106}
+          height={39}
+        />
 
         <TagNative
           icon={{

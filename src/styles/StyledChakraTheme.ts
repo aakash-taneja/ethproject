@@ -3,8 +3,8 @@ import { style } from "./StyledConstants";
 import { mode } from "@chakra-ui/theme-tools";
 
 const theme = extendTheme({
-  initialColorMode: "system",
-  useSystemColorMode: true,
+  initialColorMode: "light",
+  useSystemColorMode: false,
   styles: {
     global: (props: any) => ({
       html: {
@@ -254,7 +254,7 @@ const theme = extendTheme({
         state_empty_brand_to_solid_brand: {
           background: "transparent",
           border: `${style.button.border.active}`,
-          color:`${style.button.color.active}`,
+          color: `${style.button.color.active}`,
           cursor: "pointer",
           _hover: {
             background: `${style.button.bg.active}`,

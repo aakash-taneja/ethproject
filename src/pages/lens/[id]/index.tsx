@@ -4,10 +4,19 @@ import { setContext } from "@apollo/client/link/context";
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 
+import { Avatar, Box, Image, Text, useColorMode } from "@chakra-ui/react";
+import { useEffect } from "react";
+
 export default function LensEmbed() {
   const router = useRouter();
+  // const { toggleColorMode } = useColorMode();
+  // console.log("theme is", router.query.theme);
 
-  // console.log("params ", );
+  // useEffect(() => {
+  //   if (router.query.theme == "dark") {
+  //     toggleColorMode();
+  //   }
+  // }, []);
 
   return (
     <div
@@ -20,7 +29,7 @@ export default function LensEmbed() {
       }}
     >
       <iframe
-        src={`/embed?id=${router.query.id}`}
+        src={`/embed?id=${router.query.id}&theme=${router.query.theme}`}
         height={"100%"}
         width={"100%"}
       />
