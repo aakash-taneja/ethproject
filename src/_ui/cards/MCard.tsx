@@ -81,7 +81,7 @@ const MCard = ({
   return (
     <Box
       height={cardHeight ? cardHeight : "auto"}
-      borderRadius={gStyle.card.borderRadius.default}
+      borderRadius={gStyle.card.borderRadius.button}
       background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
       padding={style.card.padding.default}
       // marginRight={style.margin["sm"]}
