@@ -19,6 +19,11 @@ import { useRef, useState } from "react";
 import { style as gStyle, style } from "@/styles/StyledConstants";
 import { slugToLogoMapping } from "@/data/meta";
 import ModalSlider from "../modal/ModalSlider";
+import {
+  ConnectWallet,
+  useAddress,
+  useSetIsWalletModalOpen,
+} from "@thirdweb-dev/react";
 
 type Props = {
   title?: string;
@@ -93,13 +98,21 @@ const MCard = ({
   // if (router.query.theme == "dark") {
   //   toggleColorMode();
   // }
+
+  const address = useAddress();
+  const setIsWalletModalOpen = useSetIsWalletModalOpen();
+
+  const openModal = () => {
+    !address && setIsWalletModalOpen(true);
+  };
+
   console.log(
     "color mode is ",
     colorMode,
     "type of colorMode",
     typeof colorMode
   );
-
+  console.log("here is the wallet address:", address);
   return (
     <>
       <Box
@@ -263,6 +276,8 @@ const MCard = ({
           )}
           {/* </Box> */}
         </FlexColumn>
+
+        {/* {!address && <ConnectWallet />} */}
         {action_name && (
           <FlexColumn height="15%">
             <ButtonNative
@@ -270,15 +285,16 @@ const MCard = ({
               variant="state_brand"
               width="100%"
               marginTop="sm"
+              onClick={async () => {
+                await openModal();
+                if (address) {
+                  console.log("minting");
+                }
+              }}
             />
           </FlexColumn>
         )}
       </Box>
-      <ModalSlider event={embedSliderModal} size="sm">
-        <FlexColumn width="100%" hrAlign="flex-start" vrAlign="flex-start">
-          <Heading fontSize={style.font["h4"]}>Welcome to Macha</Heading>
-        </FlexColumn>
-      </ModalSlider>
     </>
   );
 };

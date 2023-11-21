@@ -2,6 +2,7 @@
 import MCard from "../../_ui/cards/MCard";
 import FlexColumn from "../../_ui/flex/FlexColumn";
 import useMeta from "@/hooks/meta/useMeta";
+import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
