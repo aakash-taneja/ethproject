@@ -22,11 +22,11 @@ export default function LensEmbed({ params }: { params: { id: any } }) {
         alignItems: "center",
       }}
     >
-      <iframe
-        src={`https://app.macha.ai/embed?id=${params.id}`}
+      {/* <iframe
+        src={`/embed?id=${params.id}`}
         height={"100%"}
         width={"100%"}
-      />
+      /> */}
     </div>
   );
 }
