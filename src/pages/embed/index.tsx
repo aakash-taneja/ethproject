@@ -17,7 +17,8 @@ const Index = () => {
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
       <MCard
-        music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+        // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+        musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
         image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
         slug={hookMeta?.metaData?.meta?.slug}

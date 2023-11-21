@@ -1,5 +1,6 @@
 import Loader from "@/_ui/loader/Loader";
 import GlobalIcons from "@/styles/GlobalIcons";
+import { style } from "@/styles/StyledConstants";
 import {
   Box,
   CircularProgress,
@@ -74,7 +75,11 @@ const MusicPlayer = ({ audioUrl }: Props) => {
     }
   };
   return (
-    <Box display={"flex"} justifyContent={"space-between"}>
+    <Box
+      display={"flex"}
+      justifyContent={"space-between"}
+      marginTop={style.margin.sm}
+    >
       {isLoading ? (
         <Loader size="sm" />
       ) : (

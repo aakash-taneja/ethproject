@@ -105,47 +105,22 @@ const MCard = ({
       // }}
     >
       <FlexRow
-        hrAlign="flex-start"
+        hrAlign="space-between"
         height="auto"
         vrAlign="center"
         marginBottom="sm"
       >
+        <Image src="/assets/MACHALogo.svg" alt="logo" width={106} height={39} />
+
         <TagNative
           icon={{
             align: "left",
             slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
           }}
-          size="md"
+          size="sm"
           value={slug}
           lineHeight="1.5rem"
         />
-        {/* <AudioPlayer /> */}
-        {music && (
-          <>
-            <audio
-              ref={audioRef}
-              onEnded={handleAudioEnded}
-              src={`https://arweave.net/${music}`}
-            ></audio>
-            {isPlaying ? (
-              <Image
-                src={GlobalIcons["icon-pause"]}
-                onClick={(e) => {
-                  stopAudio(e);
-                }}
-                alt="icon-pause"
-              />
-            ) : (
-              <Image
-                src={GlobalIcons["icon-play"]}
-                onClick={(e) => {
-                  playAudio(e);
-                }}
-                alt="icon-play"
-              />
-            )}
-          </>
-        )}
       </FlexRow>
 
       {owner_name && (
