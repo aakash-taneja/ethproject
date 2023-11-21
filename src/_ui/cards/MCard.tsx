@@ -87,7 +87,7 @@ const MCard = ({
       // marginRight={style.margin["sm"]}
       // marginLeft={style.margin["sm"]}
       // marginBottom={style.margin["lg"]}
-      width={width ? width : "auto"}
+      width={"100%"}
       border={
         colorMode == "light" ? "1px solid #e2e2e2" : gStyle.card.border.default
       }
@@ -99,15 +99,15 @@ const MCard = ({
         transitionProperty: "all",
         transitionDuration: "600ms",
       }}
-      _hover={{
-        border: `${shadowOnHover && gStyle.card.border.meta}`,
-        boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-      }}
+      // _hover={{
+      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+      // }}
     >
       <FlexRow
-        hrAlign="space-between"
+        hrAlign="center"
         height="auto"
-        vrAlign="flex-start"
+        vrAlign="center"
         marginBottom="sm"
       >
         <TagNative
@@ -149,7 +149,7 @@ const MCard = ({
       </FlexRow>
 
       {owner_name && (
-        <FlexRow height="fit-content" hrAlign="flex-start" marginBottom={"xs"}>
+        <FlexRow height="fit-content" hrAlign="center" marginBottom={"xs"}>
           <Avatar src={owner_image} />
           <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
             <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
@@ -197,16 +197,18 @@ const MCard = ({
         </>
       )}
 
-      <FlexColumn height="auto" vrAlign="flex-start" padding="0% 3%">
-        {title && <Text
-          color={colorMode == "light" ? "#282828" : ""}
-          className="m-b-0"
-          fontSize={"xl"}
-          fontWeight={600}
-          marginTop={gStyle.margin["xs"]}
-        >
-          {title}
-        </Text>}
+      <FlexColumn height="auto" vrAlign="center" padding="0% 3%">
+        {title && (
+          <Text
+            color={colorMode == "light" ? "#282828" : ""}
+            className="m-b-0"
+            fontSize={"xl"}
+            fontWeight={600}
+            marginTop={gStyle.margin["xs"]}
+          >
+            {title}
+          </Text>
+        )}
         {/* <Box width="15rem"> */}
         {description && (
           <>

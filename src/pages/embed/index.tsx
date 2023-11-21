@@ -22,7 +22,7 @@ const Index = () => {
         image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
         slug={hookMeta?.metaData?.meta?.slug}
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
-        cardHeight="450px"
+        cardHeight="100%"
       />
     </FlexColumn>
   );
