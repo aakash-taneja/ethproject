@@ -14,15 +14,19 @@ const Index = () => {
       hookMeta._fetch(router.query.id);
     }
   }, [router.query.id]);
+
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
       <MCard
-        music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+        // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+        musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
         image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
         slug={hookMeta?.metaData?.meta?.slug}
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
-        cardHeight="450px"
+        cardHeight="100vh"
+        colorMode={router.query.theme}
+        // action_name="Collect"
       />
     </FlexColumn>
   );

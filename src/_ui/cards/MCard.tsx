@@ -31,6 +31,7 @@ type Props = {
   musicplayer?: any;
   shadowOnHover?: any;
   showMore?: boolean;
+  colorMode?: any;
 };
 
 const MCard = ({
@@ -53,6 +54,7 @@ const MCard = ({
   musicplayer,
   shadowOnHover = true,
   showMore,
+  colorMode,
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -76,18 +78,28 @@ const MCard = ({
   const handleAudioEnded = () => {
     setIsPlaying(false); // Update isPlaying to false when audio ends
   };
-  const { colorMode } = useColorMode();
+
+  // console.log("theme is ", router.asPath);
+  // if (router.query.theme == "dark") {
+  //   toggleColorMode();
+  // }
+  console.log(
+    "color mode is ",
+    colorMode,
+    "type of colorMode",
+    typeof colorMode
+  );
 
   return (
     <Box
       height={cardHeight ? cardHeight : "auto"}
-      borderRadius={gStyle.card.borderRadius.default}
+      borderRadius={"5px"}
       background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
       padding={style.card.padding.default}
       // marginRight={style.margin["sm"]}
       // marginLeft={style.margin["sm"]}
       // marginBottom={style.margin["lg"]}
-      width={width ? width : "auto"}
+      width={"100%"}
       border={
         colorMode == "light" ? "1px solid #e2e2e2" : gStyle.card.border.default
       }
@@ -99,57 +111,41 @@ const MCard = ({
         transitionProperty: "all",
         transitionDuration: "600ms",
       }}
-      _hover={{
-        border: `${shadowOnHover && gStyle.card.border.meta}`,
-        boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-      }}
+      // _hover={{
+      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+      // }}
     >
       <FlexRow
         hrAlign="space-between"
         height="auto"
-        vrAlign="flex-start"
+        vrAlign="center"
         marginBottom="sm"
       >
+        <Image
+          src={
+            colorMode == "light"
+              ? GlobalIcons["logo-dark-Macha"]
+              : "/assets/MACHALogo.svg"
+          }
+          alt="logo"
+          width={106}
+          height={39}
+        />
+
         <TagNative
           icon={{
             align: "left",
             slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
           }}
-          size="md"
+          size="sm"
           value={slug}
           lineHeight="1.5rem"
         />
-        {/* <AudioPlayer /> */}
-        {music && (
-          <>
-            <audio
-              ref={audioRef}
-              onEnded={handleAudioEnded}
-              src={`https://arweave.net/${music}`}
-            ></audio>
-            {isPlaying ? (
-              <Image
-                src={GlobalIcons["icon-pause"]}
-                onClick={(e) => {
-                  stopAudio(e);
-                }}
-                alt="icon-pause"
-              />
-            ) : (
-              <Image
-                src={GlobalIcons["icon-play"]}
-                onClick={(e) => {
-                  playAudio(e);
-                }}
-                alt="icon-play"
-              />
-            )}
-          </>
-        )}
       </FlexRow>
 
       {owner_name && (
-        <FlexRow height="fit-content" hrAlign="flex-start" marginBottom={"xs"}>
+        <FlexRow height="fit-content" hrAlign="center" marginBottom={"xs"}>
           <Avatar src={owner_image} />
           <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
             <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
@@ -162,58 +158,66 @@ const MCard = ({
         </FlexRow>
       )}
 
-      {image && (
-        <div
-          style={{
-            height: "60%",
-            display: "flex",
-            justifyContent: "center",
-            // marginBottom: `${style.margin.sm}`,
-          }}
-        >
-          <Image
-            src={helperIPFS(image)}
-            alt="coverImage"
-            width="auto"
-            maxW="14rem"
-            maxH="14rem"
-            h="auto"
-            // objectFit={"cover"}
-            borderRadius={gStyle.card.borderRadius.default}
-          />
-        </div>
-      )}
+      <FlexColumn height="auto" vrAlign="flex-start">
+        {image && (
+          <div
+            style={{
+              height: "60%",
+              display: "flex",
+              justifyContent: "center",
+              // marginBottom: `${style.margin.sm}`,
+            }}
+          >
+            <Image
+              src={helperIPFS(image)}
+              alt="coverImage"
+              width="100%"
+              h="100%"
+              // objectFit={"cover"}
+              borderRadius={gStyle.card.borderRadius.default}
+            />
+          </div>
+        )}
+      </FlexColumn>
 
-      {musicplayer && (
-        <>
-          {" "}
-          <MusicPlayer
-            key={musicplayer}
-            audioUrl={`https://arweave.net/${musicplayer.substr(
-              5,
-              musicplayer.length - 5
-            )}`}
-          />
-        </>
-      )}
-
-      <FlexColumn height="auto" vrAlign="flex-start" padding="0% 3%">
-        {title && <Text
-          color={colorMode == "light" ? "#282828" : ""}
-          className="m-b-0"
-          fontSize={"xl"}
-          fontWeight={600}
-          marginTop={gStyle.margin["xs"]}
-        >
-          {title}
-        </Text>}
+      <FlexColumn
+        height={action_name ? "20%" : "35%"}
+        vrAlign="flex-start"
+        padding="1% 0%"
+        width="100%"
+      >
+        {musicplayer && (
+          <>
+            {" "}
+            <MusicPlayer
+              key={musicplayer}
+              audioUrl={`https://arweave.net/${musicplayer.substr(
+                5,
+                musicplayer.length - 5
+              )}`}
+              colorMode={colorMode}
+            />
+          </>
+        )}
+        {title && (
+          <Text
+            color={colorMode == "light" ? "#282828" : ""}
+            className="m-b-0"
+            fontSize={"xl"}
+            fontWeight={600}
+            marginTop={gStyle.margin["xs"]}
+            maxW="90vw"
+          >
+            {title}
+          </Text>
+        )}
         {/* <Box width="15rem"> */}
         {description && (
           <>
             <Text
               color={colorMode == "light" ? "#282828" : ""}
               className="m-b-0"
-              maxW={titleMaxw ? titleMaxw : "20rem"}
+              maxW={titleMaxw ? titleMaxw : "90vw"}
               fontSize={"md"}
               marginTop={gStyle.margin["xxxs"]}
             >
@@ -242,12 +246,14 @@ const MCard = ({
         {/* </Box> */}
       </FlexColumn>
       {action_name && (
-        <ButtonNative
-          text={action_name}
-          variant="state_brand"
-          width="100%"
-          marginTop="sm"
-        />
+        <FlexColumn height="15%">
+          <ButtonNative
+            text={action_name}
+            variant="state_brand"
+            width="100%"
+            marginTop="sm"
+          />
+        </FlexColumn>
       )}
     </Box>
   );
