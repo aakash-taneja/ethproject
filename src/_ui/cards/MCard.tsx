@@ -10,6 +10,11 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { style as gStyle, style } from "@/styles/StyledConstants";
 import { slugToLogoMapping } from "@/data/meta";
+import {
+  ConnectWallet,
+  useAddress,
+  useSetIsWalletModalOpen,
+} from "@thirdweb-dev/react";
 
 type Props = {
   title?: string;
@@ -83,13 +88,21 @@ const MCard = ({
   // if (router.query.theme == "dark") {
   //   toggleColorMode();
   // }
+
+  const address = useAddress();
+  const setIsWalletModalOpen = useSetIsWalletModalOpen();
+
+  const openModal = () => {
+    !address && setIsWalletModalOpen(true);
+  };
+
   console.log(
     "color mode is ",
     colorMode,
     "type of colorMode",
     typeof colorMode
   );
-
+  console.log("here is the wallet address:", address);
   return (
     <Box
       height={cardHeight ? cardHeight : "auto"}
@@ -245,6 +258,8 @@ const MCard = ({
         )}
         {/* </Box> */}
       </FlexColumn>
+
+      {/* {!address && <ConnectWallet />} */}
       {action_name && (
         <FlexColumn height="15%">
           <ButtonNative
@@ -252,6 +267,12 @@ const MCard = ({
             variant="state_brand"
             width="100%"
             marginTop="sm"
+            onClick={async () => {
+              await openModal();
+              if (address) {
+                console.log("minting");
+              }
+            }}
           />
         </FlexColumn>
       )}

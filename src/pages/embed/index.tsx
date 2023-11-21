@@ -2,6 +2,7 @@
 import MCard from "../../_ui/cards/MCard";
 import FlexColumn from "../../_ui/flex/FlexColumn";
 import useMeta from "@/hooks/meta/useMeta";
+import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
@@ -17,17 +18,25 @@ const Index = () => {
 
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
-      <MCard
-        // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
-        musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
-        title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
-        image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
-        slug={hookMeta?.metaData?.meta?.slug}
-        description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
-        cardHeight="100vh"
-        colorMode={router.query.theme}
-        // action_name="Collect"
-      />
+      <Box
+        height="100%"
+        width="100%"
+        bg={router.query.theme == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
+      >
+        <MCard
+          // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+          musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
+          title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
+          image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
+          slug={hookMeta?.metaData?.meta?.slug}
+          description={
+            hookMeta?.metaData?.meta?.data?.modified?.meta_description
+          }
+          cardHeight="100vh"
+          colorMode={router.query.theme}
+          action_name="MINT"
+        />
+      </Box>
     </FlexColumn>
   );
 };
