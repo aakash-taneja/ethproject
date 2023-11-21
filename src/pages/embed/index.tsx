@@ -25,14 +25,14 @@ const Index = () => {
         owner_name={hookMeta?.metaData?.metaOwner}
         width="100%"
       /> */}
-      {/* <MCard
+      <MCard
         music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
         image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
         slug={hookMeta?.metaData?.meta?.slug}
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
         cardHeight="450px"
-      /> */}
+      />
     </FlexColumn>
   );
 };

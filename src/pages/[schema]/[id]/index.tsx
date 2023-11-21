@@ -2,13 +2,11 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { gql } from "@apollo/client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 
-export default function LensEmbed({ params }: { params: { id: any } }) {
-  const searchParams = useSearchParams();
+export default function LensEmbed() {
   const router = useRouter();
 
-  const hookSearchParams = useSearchParams();
 
   // console.log("params ", );
 
@@ -22,11 +20,7 @@ export default function LensEmbed({ params }: { params: { id: any } }) {
         alignItems: "center",
       }}
     >
-      {/* <iframe
-        src={`/embed?id=${params.id}`}
-        height={"100%"}
-        width={"100%"}
-      /> */}
+      <iframe src={`/embed?id=${router.query.id}`} height={"100%"} width={"100%"} />
     </div>
   );
 }
