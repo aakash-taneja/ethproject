@@ -105,7 +105,7 @@ const MCard = ({
       // }}
     >
       <FlexRow
-        hrAlign="center"
+        hrAlign="flex-start"
         height="auto"
         vrAlign="center"
         marginBottom="sm"
@@ -174,10 +174,8 @@ const MCard = ({
           <Image
             src={helperIPFS(image)}
             alt="coverImage"
-            width="auto"
-            maxW="14rem"
-            maxH="14rem"
-            h="auto"
+            width="100%"
+            h="100%"
             // objectFit={"cover"}
             borderRadius={gStyle.card.borderRadius.default}
           />
@@ -197,7 +195,7 @@ const MCard = ({
         </>
       )}
 
-      <FlexColumn height="auto" vrAlign="center" padding="0% 3%">
+      <FlexColumn height="auto" vrAlign="flex-start" padding="3% 0%">
         {title && (
           <Text
             color={colorMode == "light" ? "#282828" : ""}
@@ -205,6 +203,7 @@ const MCard = ({
             fontSize={"xl"}
             fontWeight={600}
             marginTop={gStyle.margin["xs"]}
+            maxW="90vw"
           >
             {title}
           </Text>
@@ -215,7 +214,7 @@ const MCard = ({
             <Text
               color={colorMode == "light" ? "#282828" : ""}
               className="m-b-0"
-              maxW={titleMaxw ? titleMaxw : "20rem"}
+              maxW={titleMaxw ? titleMaxw : "90vw"}
               fontSize={"md"}
               marginTop={gStyle.margin["xxxs"]}
             >
