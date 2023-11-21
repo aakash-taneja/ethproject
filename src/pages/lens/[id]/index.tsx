@@ -1,7 +1,4 @@
 "use client";
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 
 export default function LensEmbed() {
