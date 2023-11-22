@@ -320,12 +320,7 @@ const MCard = ({
                       height="100%"
                       marginTop="sm"
                       marginBottom="0px"
-                      onClick={async () => {
-                        // await openModal();
-                        // if (address) {
-                        //   console.log("minting");
-                        // }
-                      }}
+                      onClick={async () => {}}
                     />
                   </FlexColumn>
                 )}

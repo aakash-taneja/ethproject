@@ -13,14 +13,13 @@ const Loader1: React.FC = () => {
     //   />
     // </div>
     <div className={styling.spinnerContainer}>
-      <div className={styling.spinner}>
-        
-      </div>
+      <div className={styling.spinner}></div>
       <Image
-          src="https://i.ibb.co/gWRssjK/Logo.png"
-          alt="Your Image"
-          className={styling.image}
-        />
+        src="https://i.ibb.co/gWRssjK/Logo.png"
+        alt="Your Image"
+        className={styling.image}
+        height={"300px"}
+      />
     </div>
   );
 };
