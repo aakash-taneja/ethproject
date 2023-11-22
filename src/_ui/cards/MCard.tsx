@@ -290,6 +290,7 @@ const MCard = ({
                 text={action_name}
                 variant="state_brand"
                 width="100%"
+                height="100%"
                 marginTop="sm"
                 marginBottom="0px"
                 onClick={async () => {
