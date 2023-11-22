@@ -129,8 +129,8 @@ const MCard = ({
             ? "1px solid #e2e2e2"
             : gStyle.card.border.default
         }
-        onClick={onClick}
-        cursor={shadowOnHover && "pointer"}
+        // onClick={onClick}
+        // cursor={shadowOnHover && "pointer"}
         // flexWrap={"wrap"}
         style={{
           transitionTimingFunction: "ease-in-out",
