@@ -4,12 +4,23 @@ import { Image } from "@chakra-ui/react";
 
 const Loader1: React.FC = () => {
   return (
-    <div className={styling.box}>
+    //   <div className="spinner-container">
+    //   <div className="spinner"></div>
+    //   <img
+    //     src="your-image-url.jpg"
+    //     alt="Your Image"
+    //     className="image"
+    //   />
+    // </div>
+    <div className={styling.spinnerContainer}>
+      <div className={styling.spinner}>
+        
+      </div>
       <Image
-        src="https://i.ibb.co/gWRssjK/Logo.png"
-        alt="Your Image"
-        className={styling.image}
-      />
+          src="https://i.ibb.co/gWRssjK/Logo.png"
+          alt="Your Image"
+          className={styling.image}
+        />
     </div>
   );
 };
