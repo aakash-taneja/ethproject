@@ -142,7 +142,13 @@ const MCard = ({
         //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
         // }}
       >
-        <Box padding={style.card.padding.default} height={"90%"}>
+        <Box
+          padding={style.card.padding.default}
+          height={"90%"}
+          display={"flex"}
+          flexDir={"column"}
+          justifyContent={"space-between"}
+        >
           <FlexRow
             hrAlign="space-between"
             height="5%"
@@ -242,6 +248,11 @@ const MCard = ({
                   className="m-b-0"
                   maxW={titleMaxw ? titleMaxw : "90vw"}
                   fontSize={style.font.h3}
+                  sx={{
+                    "@media screen and (max-width: 769px)": {
+                      fontSize: `${style.font.h6}`,
+                    },
+                  }}
                   marginTop={gStyle.margin["xxxs"]}
                 >
                   {image
@@ -292,7 +303,7 @@ const MCard = ({
           )}
         </Box>
         <Box
-          paddingY={style.padding.sm}
+          paddingY={style.padding.xxs}
           paddingX={style.card.padding.default}
           borderTop={style.card.border.default}
           height={"10%"}
