@@ -99,12 +99,12 @@ const MCard = ({
   //   toggleColorMode();
   // }
 
-  const address = useAddress();
-  const setIsWalletModalOpen = useSetIsWalletModalOpen();
+  // const address = useAddress();
+  // const setIsWalletModalOpen = useSetIsWalletModalOpen();
 
-  const openModal = () => {
-    !address && setIsWalletModalOpen(true);
-  };
+  // const openModal = () => {
+  //   !address && setIsWalletModalOpen(true);
+  // };
 
   console.log(
     "color mode is ",
@@ -112,7 +112,7 @@ const MCard = ({
     "type of colorMode",
     typeof colorMode
   );
-  console.log("here is the wallet address:", address);
+  // console.log("here is the wallet address:", address);
   return (
     <>
       <Box
@@ -286,10 +286,10 @@ const MCard = ({
               width="100%"
               marginTop="sm"
               onClick={async () => {
-                await openModal();
-                if (address) {
-                  console.log("minting");
-                }
+                // await openModal();
+                // if (address) {
+                //   console.log("minting");
+                // }
               }}
             />
           </FlexColumn>
