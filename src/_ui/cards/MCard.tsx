@@ -144,7 +144,7 @@ const MCard = ({
       >
         <FlexRow
           hrAlign="space-between"
-          height="auto"
+          height="5vh"
           vrAlign="center"
           marginBottom="sm"
         >
@@ -189,11 +189,11 @@ const MCard = ({
           </FlexRow>
         )}
 
-        <FlexColumn height="auto" vrAlign="flex-start">
+        <FlexColumn height="60vh" vrAlign="flex-start">
           {image && (
             <div
               style={{
-                height: "60%",
+                height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 // marginBottom: `${style.margin.sm}`,
@@ -212,7 +212,7 @@ const MCard = ({
         </FlexColumn>
 
         <FlexColumn
-          height={action_name ? "20%" : "35%"}
+          height={action_name ? "20vh" : "30vh"}
           vrAlign="flex-start"
           padding="1% 0%"
           width="100%"
@@ -279,12 +279,13 @@ const MCard = ({
 
         {/* {!address && <ConnectWallet />} */}
         {action_name && (
-          <FlexColumn height="15%">
+          <FlexColumn height="5vh">
             <ButtonNative
               text={action_name}
               variant="state_brand"
               width="100%"
               marginTop="sm"
+              marginBottom="0px"
               onClick={async () => {
                 // await openModal();
                 // if (address) {
