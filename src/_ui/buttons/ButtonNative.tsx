@@ -32,8 +32,8 @@ type Props = {
   backgroundColorHover?: any;
   textColorHover?: any;
   borderColorWhite?: boolean;
-  borderColor?:string;
-  textColor?:any;
+  borderColor?: string;
+  textColor?: any;
 };
 
 export default function ButtonNative({
@@ -98,7 +98,7 @@ export default function ButtonNative({
       paddingBottom={`${
         paddingBottom ? gStyle.padding[paddingBottom] : "12px"
       }`}
-      borderColor={borderColor? borderColor:"#14244b"}
+      borderColor={borderColor ? borderColor : "#14244b"}
       border={borderColorWhite ? border : ""}
       height={height ? height : "3rem"}
     >
@@ -113,6 +113,11 @@ export default function ButtonNative({
         <Text
           className="mb-0"
           fontSize={textFontSize ? gStyle.font[textFontSize] : "1rem"}
+          sx={{
+            "@media screen and (min-width: 480px)": {
+              fontSize: `2rem`,
+            },
+          }}
           marginLeft={gStyle.margin["xxs"]}
           marginRight={gStyle.margin["xxs"]}
           color="inherit"

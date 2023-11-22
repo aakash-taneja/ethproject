@@ -61,6 +61,10 @@ const theme = extendTheme({
         // background: `${style.modal.bg.contractModal}`,
         paddingTop: "1rem !importannt",
       },
+      ".chakra-modal__body::-webkit-scrollbar": {
+        // background: `${style.modal.bg.contractModal}`,
+        display: "none",
+      },
       ".chakra-modal__header": {
         // background: `${style.modal.bg.contractModal}`,
         // borderBottom: `${style.modal.border.contract} !important`,
@@ -72,6 +76,7 @@ const theme = extendTheme({
       ".chakra-modal__overlay": {
         opacity: "0.9 !important",
         background: `${style.modal.bg.overlay} !important`,
+        overflow: "hidden!important",
       },
       // ".chakra-modal__content": {
       //   background: `${style.modal.bg.contractModal}!important`,
