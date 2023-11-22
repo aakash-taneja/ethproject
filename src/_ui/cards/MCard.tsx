@@ -116,12 +116,13 @@ const MCard = ({
   return (
     <>
       <Box
-        height={cardHeight ? cardHeight : "auto"}
+        height={"100vh"}
         borderRadius={"5px"}
         background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
         // marginRight={style.margin["sm"]}
         // marginLeft={style.margin["sm"]}
         // marginBottom={style.margin["lg"]}
+        overflow={"hidden"}
         width={"100%"}
         border={
           colorMode == "light"
@@ -141,8 +142,13 @@ const MCard = ({
         //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
         // }}
       >
-        <Box padding={style.card.padding.default} height={"90vh"}>
-          <FlexRow hrAlign="space-between" height="5vh" vrAlign="center">
+        <Box padding={style.card.padding.default} height={"90%"}>
+          <FlexRow
+            hrAlign="space-between"
+            height="5%"
+            vrAlign="center"
+            paddingBottom="xs"
+          >
             <Box
               onClick={() => {
                 embedSliderModal.onOpen();
@@ -174,7 +180,7 @@ const MCard = ({
             </FlexRow>
           )}
 
-          <FlexColumn height="50vh" vrAlign="flex-start">
+          <FlexColumn height="60%" vrAlign="flex-start">
             {image && (
               <div
                 style={{
@@ -188,8 +194,8 @@ const MCard = ({
                   src={helperIPFS(image)}
                   alt="coverImage"
                   width="100%"
-                  h="100%"
-                  // objectFit={"cover"}
+                  height="100%"
+                  objectFit={"cover"}
                   borderRadius={gStyle.card.borderRadius.default}
                 />
               </div>
@@ -197,7 +203,7 @@ const MCard = ({
           </FlexColumn>
 
           <FlexColumn
-            height={action_name ? "20vh" : "30vh"}
+            height={action_name ? "20%" : "30%"}
             vrAlign="flex-start"
             hrAlign="flex-start"
             padding="1% 0%"
@@ -268,7 +274,7 @@ const MCard = ({
 
           {/* {!address && <ConnectWallet />} */}
           {action_name && (
-            <FlexColumn height="10vh">
+            <FlexColumn height="10%">
               <ButtonNative
                 text={action_name}
                 variant="state_brand"
@@ -289,7 +295,7 @@ const MCard = ({
           paddingY={style.padding.sm}
           paddingX={style.card.padding.default}
           borderTop={style.card.border.default}
-          height={"7vh"}
+          height={"10%"}
         >
           <Image
             src={
