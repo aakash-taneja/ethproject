@@ -307,6 +307,9 @@ const MCard = ({
           paddingX={style.card.padding.default}
           borderTop={style.card.border.default}
           height={"10%"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
         >
           <Image
             src={
