@@ -249,7 +249,7 @@ const MCard = ({
                   maxW={titleMaxw ? titleMaxw : "90vw"}
                   fontSize={style.font.h3}
                   sx={{
-                    "@media screen and (max-width: 769px)": {
+                    "@media screen and (max-width: 480px)": {
                       fontSize: `${style.font.h6}`,
                     },
                   }}
