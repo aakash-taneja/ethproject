@@ -8,6 +8,7 @@ import GlobalIcons from "@/styles/GlobalIcons";
 import {
   Avatar,
   Box,
+  Button,
   Heading,
   Image,
   Text,
@@ -324,6 +325,22 @@ const MCard = ({
           />
         </Box>
       </Box>
+      <ModalSlider
+        event={embedSliderModal}
+        header={
+          <FlexRow>
+            <Button
+              size="sm"
+              onClick={embedSliderModal.onClose}
+              variant="state_default_hover"
+            >
+              Cancel
+            </Button>
+          </FlexRow>
+        }
+      >
+        <Text>Hello macha</Text>
+      </ModalSlider>
     </>
   );
 };
