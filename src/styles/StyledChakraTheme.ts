@@ -76,6 +76,7 @@ const theme = extendTheme({
       ".chakra-modal__overlay": {
         opacity: "0.9 !important",
         background: `${style.modal.bg.overlay} !important`,
+        overflow: "hidden",
       },
       // ".chakra-modal__content": {
       //   background: `${style.modal.bg.contractModal}!important`,
