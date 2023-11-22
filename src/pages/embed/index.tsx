@@ -28,6 +28,7 @@ const Index = () => {
         cardHeight="100vh"
         colorMode={router.query.theme}
         action_name="Collect"
+        loading={hookMeta?.isLoading}
       />
     </FlexColumn>
   );
