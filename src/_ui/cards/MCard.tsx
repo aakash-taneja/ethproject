@@ -26,6 +26,7 @@ import {
   useSetIsWalletModalOpen,
 } from "@thirdweb-dev/react";
 import useMeta from "@/hooks/meta/useMeta";
+import Loader1 from "../loader/Loader1";
 
 type Props = {
   title?: string;
@@ -121,7 +122,8 @@ const MCard = ({
     <>
       {loading ? (
         <>
-          <Heading>Loading...</Heading>
+          {/* <Heading>Loading...</Heading> */}
+          <Loader1/>
         </>
       ) : (
         <>
