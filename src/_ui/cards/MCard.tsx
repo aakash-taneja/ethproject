@@ -119,7 +119,6 @@ const MCard = ({
         height={cardHeight ? cardHeight : "auto"}
         borderRadius={"5px"}
         background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
-        padding={style.card.padding.default}
         // marginRight={style.margin["sm"]}
         // marginLeft={style.margin["sm"]}
         // marginBottom={style.margin["lg"]}
@@ -142,11 +141,160 @@ const MCard = ({
         //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
         // }}
       >
-        <FlexRow
-          hrAlign="space-between"
-          height="5vh"
-          vrAlign="center"
-          marginBottom="sm"
+        <Box padding={style.card.padding.default} height={"92vh"}>
+          <FlexRow
+            hrAlign="space-between"
+            height="5vh"
+            vrAlign="center"
+            marginBottom="sm"
+          >
+            <Box
+              onClick={() => {
+                embedSliderModal.onOpen();
+              }}
+            >
+              <TagNative
+                icon={{
+                  align: "left",
+                  slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
+                }}
+                size="sm"
+                value={slug}
+                lineHeight="1.5rem"
+              />
+            </Box>
+          </FlexRow>
+
+          {owner_name && (
+            <FlexRow height="fit-content" hrAlign="center" marginBottom={"xs"}>
+              <Avatar src={owner_image} />
+              <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
+                <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
+                  {owner_name}
+                </Text>
+                <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
+                  {owner_heading}
+                </Text>
+              </FlexColumn>
+            </FlexRow>
+          )}
+
+          <FlexColumn height="50vh" vrAlign="flex-start">
+            {image && (
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  // marginBottom: `${style.margin.sm}`,
+                }}
+              >
+                <Image
+                  src={helperIPFS(image)}
+                  alt="coverImage"
+                  width="100%"
+                  h="100%"
+                  // objectFit={"cover"}
+                  borderRadius={gStyle.card.borderRadius.default}
+                />
+              </div>
+            )}
+          </FlexColumn>
+
+          <FlexColumn
+            height={action_name ? "20vh" : "30vh"}
+            vrAlign="flex-start"
+            hrAlign="flex-start"
+            padding="1% 0%"
+            width="100%"
+          >
+            {musicplayer && (
+              <>
+                {" "}
+                <MusicPlayer
+                  key={musicplayer}
+                  audioUrl={`https://arweave.net/${musicplayer.substr(
+                    5,
+                    musicplayer.length - 5
+                  )}`}
+                  colorMode={colorMode}
+                />
+              </>
+            )}
+            {title && (
+              <Text
+                color={colorMode == "light" ? "#282828" : ""}
+                className="m-b-0"
+                fontSize={"xl"}
+                fontWeight={600}
+                marginTop={gStyle.margin["xs"]}
+                maxW="90vw"
+              >
+                {title}
+              </Text>
+            )}
+            {/* <Box width="15rem"> */}
+            {description && (
+              <>
+                <Text
+                  color={colorMode == "light" ? "#282828" : ""}
+                  className="m-b-0"
+                  maxW={titleMaxw ? titleMaxw : "90vw"}
+                  fontSize={style.font.h3}
+                  marginTop={gStyle.margin["xxxs"]}
+                >
+                  {image
+                    ? viewMore
+                      ? description
+                      : truncateString(description, 110)
+                    : viewMore
+                    ? description
+                    : truncateString(description, 500)}
+
+                  {description?.length > 110 && showMore && (
+                    // <span>
+                    <Text
+                      color="blue"
+                      _hover={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setViewMore((prevState) => !prevState)}
+                    >
+                      {viewMore ? "View Less" : "View More"}
+                    </Text>
+                    // </span>
+                  )}
+                </Text>
+              </>
+            )}
+            {/* </Box> */}
+          </FlexColumn>
+
+          {/* {!address && <ConnectWallet />} */}
+          {action_name && (
+            <FlexColumn height="10vh">
+              <ButtonNative
+                text={action_name}
+                variant="state_brand"
+                width="100%"
+                marginTop="sm"
+                marginBottom="0px"
+                onClick={async () => {
+                  // await openModal();
+                  // if (address) {
+                  //   console.log("minting");
+                  // }
+                }}
+              />
+            </FlexColumn>
+          )}
+        </Box>
+        <Box
+          paddingY={style.padding.sm}
+          paddingX={style.card.padding.default}
+          borderTop={style.card.border.default}
+          height={"7vh"}
         >
           <Image
             src={
@@ -158,143 +306,7 @@ const MCard = ({
             width={106}
             height={39}
           />
-          <Box
-            onClick={() => {
-              embedSliderModal.onOpen();
-            }}
-          >
-            <TagNative
-              icon={{
-                align: "left",
-                slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
-              }}
-              size="sm"
-              value={slug}
-              lineHeight="1.5rem"
-            />
-          </Box>
-        </FlexRow>
-
-        {owner_name && (
-          <FlexRow height="fit-content" hrAlign="center" marginBottom={"xs"}>
-            <Avatar src={owner_image} />
-            <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
-              <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
-                {owner_name}
-              </Text>
-              <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
-                {owner_heading}
-              </Text>
-            </FlexColumn>
-          </FlexRow>
-        )}
-
-        <FlexColumn height="60vh" vrAlign="flex-start">
-          {image && (
-            <div
-              style={{
-                height: "100%",
-                display: "flex",
-                justifyContent: "center",
-                // marginBottom: `${style.margin.sm}`,
-              }}
-            >
-              <Image
-                src={helperIPFS(image)}
-                alt="coverImage"
-                width="100%"
-                h="100%"
-                // objectFit={"cover"}
-                borderRadius={gStyle.card.borderRadius.default}
-              />
-            </div>
-          )}
-        </FlexColumn>
-
-        <FlexColumn
-          height={action_name ? "20vh" : "30vh"}
-          vrAlign="flex-start"
-          padding="1% 0%"
-          width="100%"
-        >
-          {musicplayer && (
-            <>
-              {" "}
-              <MusicPlayer
-                key={musicplayer}
-                audioUrl={`https://arweave.net/${musicplayer.substr(
-                  5,
-                  musicplayer.length - 5
-                )}`}
-                colorMode={colorMode}
-              />
-            </>
-          )}
-          {title && (
-            <Text
-              color={colorMode == "light" ? "#282828" : ""}
-              className="m-b-0"
-              fontSize={"xl"}
-              fontWeight={600}
-              marginTop={gStyle.margin["xs"]}
-              maxW="90vw"
-            >
-              {title}
-            </Text>
-          )}
-          {/* <Box width="15rem"> */}
-          {description && (
-            <>
-              <Text
-                color={colorMode == "light" ? "#282828" : ""}
-                className="m-b-0"
-                maxW={titleMaxw ? titleMaxw : "90vw"}
-                fontSize={"md"}
-                marginTop={gStyle.margin["xxxs"]}
-              >
-                {image
-                  ? viewMore
-                    ? description
-                    : truncateString(description, 110)
-                  : viewMore
-                  ? description
-                  : truncateString(description, 500)}
-
-                {description?.length > 110 && showMore && (
-                  // <span>
-                  <Text
-                    color="blue"
-                    _hover={{ textDecoration: "underline", cursor: "pointer" }}
-                    onClick={() => setViewMore((prevState) => !prevState)}
-                  >
-                    {viewMore ? "View Less" : "View More"}
-                  </Text>
-                  // </span>
-                )}
-              </Text>
-            </>
-          )}
-          {/* </Box> */}
-        </FlexColumn>
-
-        {/* {!address && <ConnectWallet />} */}
-        {action_name && (
-          <FlexColumn height="5vh">
-            <ButtonNative
-              text={action_name}
-              variant="state_brand"
-              width="100%"
-              marginTop="sm"
-              marginBottom="0px"
-              onClick={async () => {
-                // await openModal();
-                // if (address) {
-                //   console.log("minting");
-                // }
-              }}
-            />
-          </FlexColumn>
-        )}
+        </Box>
       </Box>
     </>
   );
