@@ -141,13 +141,8 @@ const MCard = ({
         //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
         // }}
       >
-        <Box padding={style.card.padding.default} height={"92vh"}>
-          <FlexRow
-            hrAlign="space-between"
-            height="5vh"
-            vrAlign="center"
-            marginBottom="sm"
-          >
+        <Box padding={style.card.padding.default} height={"90vh"}>
+          <FlexRow hrAlign="space-between" height="5vh" vrAlign="center">
             <Box
               onClick={() => {
                 embedSliderModal.onOpen();
