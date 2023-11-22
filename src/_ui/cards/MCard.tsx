@@ -339,7 +339,9 @@ const MCard = ({
           </FlexRow>
         }
       >
-        <Text>Hello macha</Text>
+        <FlexColumn height="300px">
+          <Text>Hello macha</Text>
+        </FlexColumn>
       </ModalSlider>
     </>
   );
