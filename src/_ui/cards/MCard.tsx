@@ -257,10 +257,10 @@ const MCard = ({
                         color={colorMode == "light" ? "#282828" : ""}
                         className="m-b-0"
                         maxW={titleMaxw ? titleMaxw : "90vw"}
-                        fontSize={style.font.h3}
+                        fontSize={style.font.h1}
                         sx={{
                           "@media screen and (max-width: 480px)": {
-                            fontSize: `${style.font.h6}`,
+                            fontSize: `${style.font.h3}`,
                           },
                         }}
                         marginTop={gStyle.margin["xxxs"]}
