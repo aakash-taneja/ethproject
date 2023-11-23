@@ -6,6 +6,7 @@ import MusicPlayer from "@/components/MusicPlayer";
 import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import {
+  AspectRatio,
   Avatar,
   Box,
   Button,
@@ -27,10 +28,12 @@ import {
 } from "@thirdweb-dev/react";
 import useMeta from "@/hooks/meta/useMeta";
 import Loader1 from "../loader/Loader1";
+import Carousel from "./Carousel";
 
 type Props = {
   title?: string;
   image?: string;
+  video?: string;
   floorPrice?: string;
   description?: string;
   owner_name?: string;
@@ -50,10 +53,12 @@ type Props = {
   showMore?: boolean;
   colorMode?: any;
   loading?: any;
+  carousel_images?:any;
 };
 
 const MCard = ({
   image,
+  video,
   title,
   floorPrice,
   description,
@@ -74,6 +79,7 @@ const MCard = ({
   showMore,
   colorMode,
   loading,
+  carousel_images,
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -210,6 +216,35 @@ const MCard = ({
                     </FlexColumn>
                   </FlexRow>
                 )}
+                <Carousel images={carousel_images}/>
+                <FlexColumn height="60%" vrAlign="flex-start">
+                  {video && (
+                    <div
+                      style={{
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        // marginBottom: `${style.margin.sm}`,
+                      }}
+                    >
+                      <AspectRatio
+                        width="100%"
+                        height="100%"
+                        objectFit={"contain"}
+                        className="IFRAME CLASS"
+                        // ratio={1}
+                        borderRadius={gStyle.card.borderRadius.default}
+                      >
+                        <iframe
+                          style={{ position: "relative" }}
+                          title="video"
+                          src={video}
+                          allowFullScreen
+                        />
+                      </AspectRatio>
+                    </div>
+                  )}
+                </FlexColumn>
 
                 <FlexColumn height="60%" vrAlign="flex-start">
                   {image && (

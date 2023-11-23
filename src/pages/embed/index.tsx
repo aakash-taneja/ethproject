@@ -16,12 +16,18 @@ const Index = () => {
     }
   }, [router.query.id]);
 
+  const sample_images = [
+    "https://cdn.zeebiz.com/sites/default/files/styles/zeebiz_850x478/public/2022/06/17/186446-l1.jpg?itok=JbCGzL61",
+    "https://imgd.aeplcdn.com/600x600/n/cw/ec/48687/lamborghini-aventador-left-front-three-quarter0.jpeg?wm=0",
+  ];
+
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
       <MCard
-        // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
+        music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
         musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
+        // video={hookMeta?.metaData?.meta?.data?.modified?.meta_video}
         image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
         slug={hookMeta?.metaData?.meta?.slug}
         description={hookMeta?.metaData?.meta?.data?.modified?.meta_description}
@@ -29,6 +35,7 @@ const Index = () => {
         colorMode={router.query.theme}
         action_name="Collect"
         loading={hookMeta?.isLoading}
+        // carousel_images={sample_images}
       />
     </FlexColumn>
   );
