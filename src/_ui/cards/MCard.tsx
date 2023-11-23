@@ -122,8 +122,8 @@ const MCard = ({
     <>
       <>
         <Box
-          height={"95%"}
-          width={"50%"}
+          height={"100%"}
+          width={"100%"}
           borderRadius={"15px"}
           background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
           display={"flex"}
@@ -162,6 +162,7 @@ const MCard = ({
                 flexDir={"column"}
                 justifyContent={"space-between"}
                 width={"100%"}
+                borderRadius={"1.4rem"}
               >
                 <FlexRow
                   hrAlign="space-between"
@@ -198,7 +199,9 @@ const MCard = ({
                         display: "flex",
                         justifyContent: "center",
                         padding: "1rem",
-                        background: "#efefef",
+                        background: `${
+                          colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                         width: "100%",
                         // marginBottom: `${style.margin.sm}`,
                       }}
@@ -310,7 +313,11 @@ const MCard = ({
               <Box
                 paddingY={style.padding.xxs}
                 paddingX={style.card.padding.default}
-                borderTop={style.card.border.default}
+                borderTop={
+                  colorMode == "light"
+                    ? "1px solid #e2e2e2"
+                    : gStyle.card.border.default
+                }
                 height={"10%"}
                 width={"100%"}
                 display={"flex"}
@@ -334,6 +341,7 @@ const MCard = ({
         </Box>
         <ModalSlider
           event={embedSliderModal}
+          colorMode={colorMode}
           header={
             <FlexRow>
               <Button
@@ -347,7 +355,9 @@ const MCard = ({
           }
         >
           <FlexColumn height="300px">
-            <Text>Hello macha</Text>
+            <Text color={colorMode == "light" ? "#000" : "#fff"}>
+              Hello macha
+            </Text>
           </FlexColumn>
         </ModalSlider>
       </>

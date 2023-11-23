@@ -17,9 +17,9 @@ const Index = () => {
   }, [router.query.id]);
 
   return (
-    <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
+    <FlexColumn height="100vh" vrAlign="center" hrAlign="center" width="100%">
       <Box
-        height={"100vh"}
+        height={"100%"}
         width={"100%"}
         display={"flex"}
         justifyContent={"center"}

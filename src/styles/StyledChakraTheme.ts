@@ -53,9 +53,16 @@ const theme = extendTheme({
       "input:focus": {
         background: "#000",
       },
+      ".chakra-modal__content-container": {
+        display: "flex!important",
+        flexDirection: "column!important",
+        justifyContent: "center!important",
+        borderRadius: "1.4rem!important",
+      },
       ".chakra-modal__content": {
         // borderLeft: `${style.modal.border.default} !important`,
-        borderRadius: `${style.modal.borderRadius}!important`,
+        // borderRadius: `${style.modal.borderRadius}!important`,
+        // width: "50%!important",
       },
       ".chakra-modal__body": {
         // background: `${style.modal.bg.contractModal}`,
@@ -75,8 +82,9 @@ const theme = extendTheme({
       },
       ".chakra-modal__overlay": {
         opacity: "0.9 !important",
-        background: `${style.modal.bg.overlay} !important`,
+        // background: `${style.modal.bg.overlay} !important`,
         overflow: "hidden!important",
+        borderRadius: "15px",
       },
       // ".chakra-modal__content": {
       //   background: `${style.modal.bg.contractModal}!important`,
