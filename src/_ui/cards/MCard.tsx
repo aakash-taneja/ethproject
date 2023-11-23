@@ -8,13 +8,7 @@ import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { style as gStyle, style } from "@/styles/StyledConstants";
 import { ConnectWallet, metamaskWallet, useConnect } from "@thirdweb-dev/react";
-import {
-  Box,
-  Button,
-  Image,
-  Text,
-  useDisclosure
-} from "@chakra-ui/react";
+import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import Loader1 from "../loader/Loader1";
@@ -141,10 +135,10 @@ const MCard = ({
             transitionProperty: "all",
             transitionDuration: "600ms",
           }}
-        // _hover={{
-        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-        // }}
+          // _hover={{
+          //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+          //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+          // }}
         >
           {loading ? (
             <Loader1 />
@@ -193,8 +187,9 @@ const MCard = ({
                         display: "flex",
                         justifyContent: "center",
                         padding: "1rem",
-                        background: `${colorMode == "light" ? "#efefef" : "#000A24"
-                          }`,
+                        background: `${
+                          colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                         width: "100%",
                         // marginBottom: `${style.margin.sm}`,
                       }}
@@ -263,8 +258,8 @@ const MCard = ({
                             ? description
                             : truncateString(description, 110)
                           : viewMore
-                            ? description
-                            : truncateString(description, 500)}
+                          ? description
+                          : truncateString(description, 500)}
 
                         {description?.length > 110 && showMore && (
                           // <span>
@@ -291,15 +286,16 @@ const MCard = ({
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
                   <FlexColumn height="10%" padding={style.card.padding.default}>
-                    <ConnectWallet style={{
-                      marginBottom: `${style.margin.md}`,
-                      width: "100%",
-                      background: `${style.button.bg.active}`,
-                      color: "white"
-                    }}
-                      theme="light"
+                    <ConnectWallet
+                      style={{
+                        marginBottom: `${style.margin.md}`,
+                        width: "100%",
+                        background: `${style.button.bg.active}`,
+                        color: "white",
+                      }}
+                      theme={colorMode == "light" ? "light" : "dark"}
                       modalSize="compact"
-                     />
+                    />
                     {/* <ButtonNative
                       text={action_name}
                       variant="state_brand"
