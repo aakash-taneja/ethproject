@@ -297,6 +297,7 @@ const MCard = ({
                       background: `${style.button.bg.active}`,
                       color: "white"
                     }}
+                      theme="light"
                       modalSize="compact"
                      />
                     {/* <ButtonNative
