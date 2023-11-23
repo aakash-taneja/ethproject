@@ -32,7 +32,7 @@ export default function LensEmbed() {
         src={`/embed?id=${router.query.id}&theme=${router.query.theme}`}
         height={"95%"}
         width={"50%"}
-        style={{ borderRadius: "1.3rem" }}
+        style={{ borderRadius: "0px" }}
       />
     </div>
   );
