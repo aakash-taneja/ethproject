@@ -19,8 +19,11 @@ const Index = () => {
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
       <Box
-        height={"100%"}
+        height={"100vh"}
         width={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
         background={
           router.query.theme == "light" ? "rgba(255,255,255,1)" : "#030c1a"
         }
@@ -36,7 +39,7 @@ const Index = () => {
           }
           cardHeight="100vh"
           colorMode={router.query.theme}
-          action_name="Collect"
+          // action_name="Collect"
           loading={hookMeta?.isLoading}
         />
       </Box>

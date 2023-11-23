@@ -122,8 +122,9 @@ const MCard = ({
     <>
       <>
         <Box
-          height={"100vh"}
-          borderRadius={"5px"}
+          height={"95%"}
+          width={"50%"}
+          borderRadius={"15px"}
           background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
           display={"flex"}
           flexDirection={"column"}
@@ -133,7 +134,6 @@ const MCard = ({
           // marginLeft={style.margin["sm"]}
           // marginBottom={style.margin["lg"]}
           overflow={"hidden"}
-          width={"100%"}
           border={
             colorMode == "light"
               ? "1px solid #e2e2e2"
@@ -157,7 +157,6 @@ const MCard = ({
           ) : (
             <>
               <Box
-                padding={style.card.padding.default}
                 height={"90%"}
                 display={"flex"}
                 flexDir={"column"}
@@ -166,9 +165,13 @@ const MCard = ({
               >
                 <FlexRow
                   hrAlign="space-between"
-                  height="5%"
+                  paddingBottom="sm"
+                  paddingTop="sm"
+                  paddingLeft="sm"
+                  paddingRight="sm"
+                  // padding={style.card.padding.default}
+                  height="10%"
                   vrAlign="center"
-                  paddingBottom="xs"
                 >
                   <Box
                     onClick={() => {
@@ -187,30 +190,6 @@ const MCard = ({
                   </Box>
                 </FlexRow>
 
-                {owner_name && (
-                  <FlexRow
-                    height="fit-content"
-                    hrAlign="center"
-                    marginBottom={"xs"}
-                  >
-                    <Avatar src={owner_image} />
-                    <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
-                      <Text
-                        color={colorMode == "light" ? "#282828" : ""}
-                        mb="0"
-                      >
-                        {owner_name}
-                      </Text>
-                      <Text
-                        color={colorMode == "light" ? "#282828" : ""}
-                        mb="0"
-                      >
-                        {owner_heading}
-                      </Text>
-                    </FlexColumn>
-                  </FlexRow>
-                )}
-
                 <FlexColumn height="60%" vrAlign="flex-start">
                   {image && (
                     <div
@@ -218,13 +197,16 @@ const MCard = ({
                         height: "100%",
                         display: "flex",
                         justifyContent: "center",
+                        padding: "1rem",
+                        background: "#efefef",
+                        width: "100%",
                         // marginBottom: `${style.margin.sm}`,
                       }}
                     >
                       <Image
                         src={helperIPFS(image)}
                         alt="coverImage"
-                        width="100%"
+                        // width="100%"
                         height="100%"
                         objectFit={"cover"}
                         borderRadius={gStyle.card.borderRadius.default}
@@ -237,7 +219,7 @@ const MCard = ({
                   height={action_name ? "20%" : "30%"}
                   vrAlign="flex-start"
                   hrAlign="flex-start"
-                  padding="1% 0%"
+                  padding={style.card.padding.default}
                   width="100%"
                 >
                   {musicplayer && (
@@ -312,13 +294,13 @@ const MCard = ({
 
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
-                  <FlexColumn height="10%">
+                  <FlexColumn height="10%" padding={style.card.padding.default}>
                     <ButtonNative
                       text={action_name}
                       variant="state_brand"
                       width="100%"
-                      height="100%"
-                      marginTop="sm"
+                      // height="100%"
+                      // marginTop="sm"
                       marginBottom="0px"
                       onClick={async () => {}}
                     />
