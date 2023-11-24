@@ -72,7 +72,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         {images.map((url, index) => (
           <Box
             key={index}
-            height={'6xl'}
+            height={'lg'}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"

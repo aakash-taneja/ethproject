@@ -29,6 +29,7 @@ import {
 import useMeta from "@/hooks/meta/useMeta";
 import Loader1 from "../loader/Loader1";
 import Carousel from "./Carousel";
+import ReactPlayer from "react-player";
 
 type Props = {
   title?: string;
@@ -53,7 +54,7 @@ type Props = {
   showMore?: boolean;
   colorMode?: any;
   loading?: any;
-  carousel_images?:any;
+  carousel_images?: any;
 };
 
 const MCard = ({
@@ -216,37 +217,33 @@ const MCard = ({
                     </FlexColumn>
                   </FlexRow>
                 )}
-                <Carousel images={carousel_images}/>
-                <FlexColumn height="60%" vrAlign="flex-start">
+              {carousel_images && <Carousel images={carousel_images}/>}
+
+                {video && <FlexColumn
+                  // height="60%"
+                  vrAlign="center"
+                  hrAlign="flex-start"
+                >
                   {video && (
                     <div
                       style={{
                         height: "100%",
                         display: "flex",
                         justifyContent: "center",
-                        // marginBottom: `${style.margin.sm}`,
+                        marginBottom: `${style.margin.sm}`,
                       }}
                     >
-                      <AspectRatio
-                        width="100%"
+                      <ReactPlayer
                         height="100%"
-                        objectFit={"contain"}
-                        className="IFRAME CLASS"
-                        // ratio={1}
-                        borderRadius={gStyle.card.borderRadius.default}
-                      >
-                        <iframe
-                          style={{ position: "relative" }}
-                          title="video"
-                          src={video}
-                          allowFullScreen
-                        />
-                      </AspectRatio>
+                        width="100%"
+                        url={video}
+                        controls={true}
+                      />
                     </div>
                   )}
-                </FlexColumn>
+                </FlexColumn>}
 
-                <FlexColumn height="60%" vrAlign="flex-start">
+               {image && <FlexColumn height="60%" vrAlign="flex-start">
                   {image && (
                     <div
                       style={{
@@ -266,9 +263,9 @@ const MCard = ({
                       />
                     </div>
                   )}
-                </FlexColumn>
+                </FlexColumn>}
 
-                <FlexColumn
+                {<FlexColumn
                   height={action_name ? "20%" : "30%"}
                   vrAlign="flex-start"
                   hrAlign="flex-start"
@@ -343,7 +340,7 @@ const MCard = ({
                     </>
                   )}
                   {/* </Box> */}
-                </FlexColumn>
+                </FlexColumn>}
 
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
