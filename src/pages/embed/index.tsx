@@ -22,8 +22,18 @@ const Index = () => {
   ];
 
   return (
-    <FlexColumn height="100vh" vrAlign="center" hrAlign="center">
-      <MCard
+    <FlexColumn height="100vh" vrAlign="center" hrAlign="center" width="100%">
+      <Box
+        height={"100%"}
+        width={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        background={
+          router.query.theme == "light" ? "rgba(255,255,255,1)" : "#030c1a"
+        }
+      >
+        <MCard
         music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(5)}
         musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
         title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
@@ -38,6 +48,7 @@ const Index = () => {
         loading={hookMeta?.isLoading}
         // carousel_images={sample_images}
       />
+      </Box>
     </FlexColumn>
   );
 };

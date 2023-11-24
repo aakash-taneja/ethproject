@@ -138,7 +138,7 @@ export const darkStyle = {
       hover:
         "-1px 1px 4px rgba(17, 108, 230, 0.6),1px -1px 4px rgba(17, 108, 230, 0.6)",
     },
-    padding: { default: "16px", overview: "26px" },
+    padding: { default: "1.2rem", overview: "26px" },
     margin: { default: "2.1rem", right: "3rem" },
     width: {
       meta: "30%",

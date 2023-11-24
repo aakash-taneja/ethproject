@@ -3,31 +3,16 @@ import FlexColumn from "@/_ui/flex/FlexColumn";
 import FlexRow from "@/_ui/flex/FlexRow";
 import TagNative from "@/_ui/tag/TagNative";
 import MusicPlayer from "@/components/MusicPlayer";
+import { slugToLogoMapping } from "@/data/meta";
 import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
-import {
-  AspectRatio,
-  Avatar,
-  Box,
-  Button,
-  Heading,
-  Image,
-  Text,
-  useColorMode,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { style as gStyle, style } from "@/styles/StyledConstants";
+import { ConnectWallet, metamaskWallet, useConnect } from "@thirdweb-dev/react";
+import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { style as gStyle, style } from "@/styles/StyledConstants";
-import { slugToLogoMapping } from "@/data/meta";
-import ModalSlider from "../modal/ModalSlider";
-import {
-  ConnectWallet,
-  useAddress,
-  useSetIsWalletModalOpen,
-} from "@thirdweb-dev/react";
-import useMeta from "@/hooks/meta/useMeta";
 import Loader1 from "../loader/Loader1";
+import ModalSlider from "../modal/ModalSlider";
 import Carousel from "./Carousel";
 import ReactPlayer from "react-player";
 
@@ -87,6 +72,8 @@ const MCard = ({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
   const embedSliderModal = useDisclosure();
+  const connect = useConnect();
+  const metamaskConfig = metamaskWallet();
 
   const playAudio = (e: any) => {
     setIsPlaying(true);
@@ -129,8 +116,9 @@ const MCard = ({
     <>
       <>
         <Box
-          height={"100vh"}
-          borderRadius={"5px"}
+          height={"100%"}
+          width={"100%"}
+          borderRadius={"15px"}
           background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
           display={"flex"}
           flexDirection={"column"}
@@ -140,7 +128,6 @@ const MCard = ({
           // marginLeft={style.margin["sm"]}
           // marginBottom={style.margin["lg"]}
           overflow={"hidden"}
-          width={"100%"}
           border={
             colorMode == "light"
               ? "1px solid #e2e2e2"
@@ -164,18 +151,22 @@ const MCard = ({
           ) : (
             <>
               <Box
-                padding={style.card.padding.default}
                 height={"90%"}
                 display={"flex"}
                 flexDir={"column"}
                 justifyContent={"space-between"}
                 width={"100%"}
+                borderRadius={"1.4rem"}
               >
                 <FlexRow
                   hrAlign="space-between"
-                  height="5%"
+                  paddingBottom="sm"
+                  paddingTop="sm"
+                  paddingLeft="sm"
+                  paddingRight="sm"
+                  // padding={style.card.padding.default}
+                  height="10%"
                   vrAlign="center"
-                  paddingBottom="xs"
                 >
                   <Box
                     onClick={() => {
@@ -250,13 +241,18 @@ const MCard = ({
                         height: "100%",
                         display: "flex",
                         justifyContent: "center",
+                        padding: "1rem",
+                        background: `${
+                          colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
+                        width: "100%",
                         // marginBottom: `${style.margin.sm}`,
                       }}
                     >
                       <Image
                         src={helperIPFS(image)}
                         alt="coverImage"
-                        width="100%"
+                        // width="100%"
                         height="100%"
                         objectFit={"cover"}
                         borderRadius={gStyle.card.borderRadius.default}
@@ -269,7 +265,7 @@ const MCard = ({
                   height={action_name ? "20%" : "30%"}
                   vrAlign="flex-start"
                   hrAlign="flex-start"
-                  padding="1% 0%"
+                  padding={style.card.padding.default}
                   width="100%"
                 >
                   {musicplayer && (
@@ -304,10 +300,10 @@ const MCard = ({
                         color={colorMode == "light" ? "#282828" : ""}
                         className="m-b-0"
                         maxW={titleMaxw ? titleMaxw : "90vw"}
-                        fontSize={style.font.h3}
+                        fontSize={style.font.h1}
                         sx={{
                           "@media screen and (max-width: 480px)": {
-                            fontSize: `${style.font.h6}`,
+                            fontSize: `${style.font.h3}`,
                           },
                         }}
                         marginTop={gStyle.margin["xxxs"]}
@@ -344,30 +340,54 @@ const MCard = ({
 
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
-                  <FlexColumn height="10%">
-                    <ButtonNative
+                  <FlexColumn height="10%" padding={style.card.padding.default}>
+                    <ConnectWallet
+                      style={{
+                        marginBottom: `${style.margin.md}`,
+                        width: "100%",
+                        background: `${style.button.bg.active}`,
+                        color: "white",
+                      }}
+                      theme={colorMode == "light" ? "light" : "dark"}
+                      modalSize="compact"
+                    />
+                    {/* <ButtonNative
                       text={action_name}
                       variant="state_brand"
                       width="100%"
-                      height="100%"
-                      marginTop="sm"
+                      // height="100%"
+                      // marginTop="sm"
                       marginBottom="0px"
-                      onClick={async () => {}}
-                    />
+                      onClick={async () => {
+                        const wallet = await connect(metamaskConfig);
+                        console.log("connected to ", wallet);
+                      }}
+                    /> */}
                   </FlexColumn>
                 )}
               </Box>
               <Box
                 paddingY={style.padding.xxs}
                 paddingX={style.card.padding.default}
-                borderTop={style.card.border.default}
+                borderTop={
+                  colorMode == "light"
+                    ? "1px solid #e2e2e2"
+                    : gStyle.card.border.default
+                }
+                marginTop={style.margin.md}
                 height={"10%"}
                 width={"100%"}
                 display={"flex"}
-                flexDirection={"column"}
+                flexDirection={"row"}
                 justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems={"center"}
               >
+                <Text
+                  marginRight={style.margin.xs}
+                  color={colorMode == "light" ? "#000" : "#fff"}
+                >
+                  Powered By
+                </Text>
                 <Image
                   src={
                     colorMode == "light"
@@ -384,6 +404,7 @@ const MCard = ({
         </Box>
         <ModalSlider
           event={embedSliderModal}
+          colorMode={colorMode}
           header={
             <FlexRow>
               <Button
@@ -397,7 +418,9 @@ const MCard = ({
           }
         >
           <FlexColumn height="300px">
-            <Text>Hello macha</Text>
+            <Text color={colorMode == "light" ? "#000" : "#fff"}>
+              Hello macha
+            </Text>
           </FlexColumn>
         </ModalSlider>
       </>
