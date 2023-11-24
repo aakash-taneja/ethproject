@@ -230,6 +230,7 @@ const MCard = ({
                         style={{
                           height: "100%",
                           display: "flex",
+                          width: "100%",
                           justifyContent: "center",
                           marginBottom: `${style.margin.sm}`,
                         }}
@@ -242,7 +243,7 @@ const MCard = ({
                           playing={true}
                         /> */}
                         <video
-                          src="http://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
+                          src="http://ipfs.io/ipfs/QmPanjQA4yDjmbykDcCknVuUpSi835pBRzBCcZNC6P1Fep"
                           preload="auto"
                           controls={true}
                           style={{ width: "100%", height: "100%" }}
