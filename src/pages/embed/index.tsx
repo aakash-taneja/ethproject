@@ -37,11 +37,11 @@ const Index = () => {
           // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(
           //   5
           // )}
-          musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
+          // musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
           title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
           // video={hookMeta?.metaData?.meta?.data?.modified?.meta_video}
-          // video="https://ipfs.io/ipfs/QmYqGPvVCkKn1Xq5BmCtNVa7CCqP2dk36J3qfSJ4Mgwm5Z"
-          image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
+          video="https://ipfs.io/ipfs/QmYqGPvVCkKn1Xq5BmCtNVa7CCqP2dk36J3qfSJ4Mgwm5Z"
+          // image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
           slug={hookMeta?.metaData?.meta?.slug}
           description={
             hookMeta?.metaData?.meta?.data?.modified?.meta_description

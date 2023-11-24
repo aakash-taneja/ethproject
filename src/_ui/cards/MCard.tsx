@@ -239,6 +239,7 @@ const MCard = ({
                           width="100%"
                           url={video}
                           controls={true}
+                          playing={true}
                         />
                       </div>
                     )}
