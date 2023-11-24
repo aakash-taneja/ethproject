@@ -71,7 +71,8 @@ const MCard = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [viewMore, setViewMore] = useState<boolean>(false);
-  const embedSliderModal = useDisclosure();
+  const detailsModal = useDisclosure();
+  const walletModal = useDisclosure();
   const connect = useConnect();
   const metamaskConfig = metamaskWallet();
 
@@ -170,7 +171,7 @@ const MCard = ({
                 >
                   <Box
                     onClick={() => {
-                      embedSliderModal.onOpen();
+                      detailsModal.onOpen();
                     }}
                   >
                     <TagNative
@@ -183,6 +184,12 @@ const MCard = ({
                       lineHeight="1.5rem"
                     />
                   </Box>
+                  <Image
+                    src={GlobalIcons["icon-wallet"]}
+                    onClick={() => {
+                      walletModal.onOpen();
+                    }}
+                  />
                 </FlexRow>
 
                 {owner_name && (
@@ -208,7 +215,9 @@ const MCard = ({
                     </FlexColumn>
                   </FlexRow>
                 )}
-                {carousel_images && <Carousel images={carousel_images} />}
+                {carousel_images && (
+                  <Carousel colorMode={colorMode} images={carousel_images} />
+                )}
 
                 {video && (
                   <FlexColumn
@@ -347,16 +356,6 @@ const MCard = ({
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
                   <FlexColumn height="10%" padding={style.card.padding.default}>
-                    <ConnectWallet
-                      style={{
-                        marginBottom: `${style.margin.md}`,
-                        width: "100%",
-                        background: `${style.button.bg.active}`,
-                        color: "white",
-                      }}
-                      theme={colorMode == "light" ? "light" : "dark"}
-                      modalSize="compact"
-                    />
                     {/* <ButtonNative
                       text={action_name}
                       variant="state_brand"
@@ -409,13 +408,35 @@ const MCard = ({
           )}
         </Box>
         <ModalSlider
-          event={embedSliderModal}
+          event={detailsModal}
+          colorMode={colorMode}
+          header={
+            <></>
+            // <FlexRow>
+            //   <Button
+            //     size="sm"
+            //     onClick={detailsModal.onClose}
+            //     variant="state_default_hover"
+            //   >
+            //     Cancel
+            //   </Button>
+            // </FlexRow>
+          }
+        >
+          <FlexColumn height="300px">
+            <Text color={colorMode == "light" ? "#000" : "#fff"}>
+              Hello macha
+            </Text>
+          </FlexColumn>
+        </ModalSlider>
+        <ModalSlider
+          event={walletModal}
           colorMode={colorMode}
           header={
             <FlexRow>
               <Button
                 size="sm"
-                onClick={embedSliderModal.onClose}
+                onClick={walletModal.onClose}
                 variant="state_default_hover"
               >
                 Cancel
@@ -423,10 +444,17 @@ const MCard = ({
             </FlexRow>
           }
         >
-          <FlexColumn height="300px">
-            <Text color={colorMode == "light" ? "#000" : "#fff"}>
-              Hello macha
-            </Text>
+          <FlexColumn height="300px" hrAlign="flex-start">
+            <ConnectWallet
+              style={{
+                marginBottom: `${style.margin.md}`,
+                width: "100%",
+                background: `${style.button.bg.active}`,
+                color: "white",
+              }}
+              theme={colorMode == "light" ? "light" : "dark"}
+              modalSize="compact"
+            />
           </FlexColumn>
         </ModalSlider>
       </>

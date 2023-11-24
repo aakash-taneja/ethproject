@@ -1,22 +1,23 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Box, IconButton, useBreakpointValue } from '@chakra-ui/react'
+import React from "react";
+import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
+import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 // And react-slick as our Carousel Lib
-import Slider from 'react-slick'
+import Slider from "react-slick";
 
 // ... (existing imports)
 
 interface CarouselProps {
   images: string[];
+  colorMode: any;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images }) => {
+const Carousel: React.FC<CarouselProps> = ({ images, colorMode }) => {
   const [slider, setSlider] = React.useState<Slider | null>(null);
-  const top = useBreakpointValue({ base: '90%', md: '50%' });
-  const side = useBreakpointValue({ base: '30%', md: '10px' });
+  const top = useBreakpointValue({ base: "90%", md: "50%" });
+  const side = useBreakpointValue({ base: "30%", md: "10px" });
 
   const settings = {
     dots: true,
@@ -31,7 +32,12 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   };
 
   return (
-    <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>
+    <Box
+      position={"relative"}
+      height={"600px"}
+      width={"full"}
+      overflow={"hidden"}
+    >
       <link
         rel="stylesheet"
         type="text/css"
@@ -49,7 +55,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         position="absolute"
         left={side}
         top={top}
-        transform={'translate(0%, -50%)'}
+        transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
       >
@@ -62,7 +68,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         position="absolute"
         right={side}
         top={top}
-        transform={'translate(0%, -50%)'}
+        transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickNext()}
       >
@@ -70,15 +76,17 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
       </IconButton>
       <Slider {...settings} ref={(slider: Slider | null) => setSlider(slider)}>
         {images.map((url, index) => (
-          <Box
-            key={index}
-            height={'lg'}
-            position="relative"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundImage={`url(${url})`}
-          />
+          <Box background={colorMode == "light" ? "#efefef" : "#000A24"}>
+            <Box
+              key={index}
+              height={"lg"}
+              position="relative"
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="contain"
+              backgroundImage={`url(${url})`}
+            />
+          </Box>
         ))}
       </Slider>
     </Box>
