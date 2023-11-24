@@ -76,9 +76,11 @@ const Carousel: React.FC<CarouselProps> = ({ images, colorMode }) => {
       </IconButton>
       <Slider {...settings} ref={(slider: Slider | null) => setSlider(slider)}>
         {images.map((url, index) => (
-          <Box background={colorMode == "light" ? "#efefef" : "#000A24"}>
+          <Box
+            key={index}
+            background={colorMode == "light" ? "#efefef" : "#000A24"}
+          >
             <Box
-              key={index}
               height={"lg"}
               position="relative"
               backgroundPosition="center"

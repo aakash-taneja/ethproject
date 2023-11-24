@@ -127,6 +127,12 @@ const theme = extendTheme({
         background: `${mode("#ffff", `${style.input.bg.default}`)} !important`,
         border: "0px",
       },
+      ".tw-connected-wallet__balance": {
+        color: "#fff!important",
+      },
+      ".tw-connected-wallet__address": {
+        color: "#fff!important",
+      },
     }),
   },
   textStyles: {},

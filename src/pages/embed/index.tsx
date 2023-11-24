@@ -34,9 +34,9 @@ const Index = () => {
         }
       >
         <MCard
-          // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(
-          //   5
-          // )}
+          music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(
+            5
+          )}
           // musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
           title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
           // video={hookMeta?.metaData?.meta?.data?.modified?.meta_video}
@@ -50,7 +50,7 @@ const Index = () => {
           colorMode={router.query.theme}
           action_name="Collect"
           loading={hookMeta?.isLoading}
-          carousel_images={sample_images}
+          // carousel_images={sample_images}
         />
       </Box>
     </FlexColumn>

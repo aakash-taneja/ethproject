@@ -411,16 +411,15 @@ const MCard = ({
           event={detailsModal}
           colorMode={colorMode}
           header={
-            <></>
-            // <FlexRow>
-            //   <Button
-            //     size="sm"
-            //     onClick={detailsModal.onClose}
-            //     variant="state_default_hover"
-            //   >
-            //     Cancel
-            //   </Button>
-            // </FlexRow>
+            <FlexRow>
+              <Button
+                size="sm"
+                onClick={detailsModal.onClose}
+                variant="state_default_hover"
+              >
+                Cancel
+              </Button>
+            </FlexRow>
           }
         >
           <FlexColumn height="300px">
@@ -434,13 +433,10 @@ const MCard = ({
           colorMode={colorMode}
           header={
             <FlexRow>
-              <Button
-                size="sm"
+              <Image
+                src={GlobalIcons["icon-chevron-down"]}
                 onClick={walletModal.onClose}
-                variant="state_default_hover"
-              >
-                Cancel
-              </Button>
+              />
             </FlexRow>
           }
         >
