@@ -28,12 +28,23 @@ export default function LensEmbed() {
         }`,
       }}
     >
-      <iframe
-        src={`/embed?id=${router.query.id}&theme=${router.query.theme}`}
+      <Box
         height={"95%"}
         width={"50%"}
-        style={{ borderRadius: "0px" }}
-      />
+        sx={{
+          "@media screen and (max-width: 950px)": {
+            width: "100%",
+            height: "100%",
+          },
+        }}
+      >
+        <iframe
+          src={`/embed?id=${router.query.id}&theme=${router.query.theme}`}
+          height={"100%"}
+          width={"100%"}
+          style={{ borderRadius: "0px" }}
+        />
+      </Box>
     </div>
   );
 }

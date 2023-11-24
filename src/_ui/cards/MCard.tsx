@@ -323,10 +323,11 @@ const MCard = ({
                 height={"10%"}
                 width={"100%"}
                 display={"flex"}
-                flexDirection={"column"}
+                flexDirection={"row"}
                 justifyContent={"center"}
-                alignItems={"flex-start"}
+                alignItems={"center"}
               >
+                <Text marginRight={style.margin.xs}>Powered By</Text>
                 <Image
                   src={
                     colorMode == "light"
