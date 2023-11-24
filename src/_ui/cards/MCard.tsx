@@ -234,13 +234,20 @@ const MCard = ({
                           marginBottom: `${style.margin.sm}`,
                         }}
                       >
-                        <ReactPlayer
+                        {/* <ReactPlayer
                           height="100%"
                           width="100%"
                           url={video}
                           controls={true}
                           playing={true}
-                        />
+                        /> */}
+                        <video
+                          src="http://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
+                          preload="auto"
+                          // autoplay=""
+                          controls={true}
+                          style={{ width: "100%", height: "100%" }}
+                        ></video>
                       </div>
                     )}
                   </FlexColumn>
