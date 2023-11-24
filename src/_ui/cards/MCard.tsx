@@ -327,7 +327,12 @@ const MCard = ({
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Text marginRight={style.margin.xs}>Powered By</Text>
+                <Text
+                  marginRight={style.margin.xs}
+                  color={colorMode == "light" ? "#000" : "#fff"}
+                >
+                  Powered By
+                </Text>
                 <Image
                   src={
                     colorMode == "light"
