@@ -191,7 +191,7 @@ const MCard = ({
                     hrAlign="center"
                     marginBottom={"xs"}
                   >
-                    <Avatar src={owner_image} />
+                    {/* <Avatar src={owner_image} /> */}
                     <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
                       <Text
                         color={colorMode == "light" ? "#282828" : ""}
@@ -208,135 +208,141 @@ const MCard = ({
                     </FlexColumn>
                   </FlexRow>
                 )}
-              {carousel_images && <Carousel images={carousel_images}/>}
+                {carousel_images && <Carousel images={carousel_images} />}
 
-                {video && <FlexColumn
-                  // height="60%"
-                  vrAlign="center"
-                  hrAlign="flex-start"
-                >
-                  {video && (
-                    <div
-                      style={{
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        marginBottom: `${style.margin.sm}`,
-                      }}
-                    >
-                      <ReactPlayer
-                        height="100%"
-                        width="100%"
-                        url={video}
-                        controls={true}
-                      />
-                    </div>
-                  )}
-                </FlexColumn>}
+                {video && (
+                  <FlexColumn
+                    // height="60%"
+                    vrAlign="center"
+                    hrAlign="flex-start"
+                  >
+                    {video && (
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          marginBottom: `${style.margin.sm}`,
+                        }}
+                      >
+                        <ReactPlayer
+                          height="100%"
+                          width="100%"
+                          url={video}
+                          controls={true}
+                        />
+                      </div>
+                    )}
+                  </FlexColumn>
+                )}
 
-               {image && <FlexColumn height="60%" vrAlign="flex-start">
-                  {image && (
-                    <div
-                      style={{
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        padding: "1rem",
-                        background: `${
-                          colorMode == "light" ? "#efefef" : "#000A24"
-                        }`,
-                        width: "100%",
-                        // marginBottom: `${style.margin.sm}`,
-                      }}
-                    >
-                      <Image
-                        src={helperIPFS(image)}
-                        alt="coverImage"
-                        // width="100%"
-                        height="100%"
-                        objectFit={"cover"}
-                        borderRadius={gStyle.card.borderRadius.default}
-                      />
-                    </div>
-                  )}
-                </FlexColumn>}
+                {image && (
+                  <FlexColumn height="60%" vrAlign="flex-start">
+                    {image && (
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          padding: "1rem",
+                          background: `${
+                            colorMode == "light" ? "#efefef" : "#000A24"
+                          }`,
+                          width: "100%",
+                          // marginBottom: `${style.margin.sm}`,
+                        }}
+                      >
+                        <Image
+                          src={helperIPFS(image)}
+                          alt="coverImage"
+                          // width="100%"
+                          height="100%"
+                          objectFit={"cover"}
+                          borderRadius={gStyle.card.borderRadius.default}
+                        />
+                      </div>
+                    )}
+                  </FlexColumn>
+                )}
 
-                {<FlexColumn
-                  height={action_name ? "20%" : "30%"}
-                  vrAlign="flex-start"
-                  hrAlign="flex-start"
-                  padding={style.card.padding.default}
-                  width="100%"
-                >
-                  {musicplayer && (
-                    <>
-                      {" "}
-                      <MusicPlayer
-                        key={musicplayer}
-                        audioUrl={`https://arweave.net/${musicplayer.substr(
-                          5,
-                          musicplayer.length - 5
-                        )}`}
-                        colorMode={colorMode}
-                      />
-                    </>
-                  )}
-                  {title && (
-                    <Text
-                      color={colorMode == "light" ? "#282828" : ""}
-                      className="m-b-0"
-                      fontSize={"xl"}
-                      fontWeight={600}
-                      marginTop={gStyle.margin["xs"]}
-                      maxW="90vw"
-                    >
-                      {title}
-                    </Text>
-                  )}
-                  {/* <Box width="15rem"> */}
-                  {description && (
-                    <>
+                {
+                  <FlexColumn
+                    height={action_name ? "20%" : "30%"}
+                    vrAlign="flex-start"
+                    hrAlign="flex-start"
+                    padding={style.card.padding.default}
+                    width="100%"
+                  >
+                    {musicplayer && (
+                      <>
+                        {" "}
+                        <MusicPlayer
+                          key={musicplayer}
+                          audioUrl={`https://arweave.net/${musicplayer.substr(
+                            5,
+                            musicplayer.length - 5
+                          )}`}
+                          colorMode={colorMode}
+                        />
+                      </>
+                    )}
+                    {title && (
                       <Text
                         color={colorMode == "light" ? "#282828" : ""}
                         className="m-b-0"
-                        maxW={titleMaxw ? titleMaxw : "90vw"}
-                        fontSize={style.font.h1}
-                        sx={{
-                          "@media screen and (max-width: 480px)": {
-                            fontSize: `${style.font.h3}`,
-                          },
-                        }}
-                        marginTop={gStyle.margin["xxxs"]}
+                        fontSize={"xl"}
+                        fontWeight={600}
+                        marginTop={gStyle.margin["xs"]}
+                        maxW="90vw"
                       >
-                        {image
-                          ? viewMore
-                            ? description
-                            : truncateString(description, 110)
-                          : viewMore
-                          ? description
-                          : truncateString(description, 500)}
-
-                        {description?.length > 110 && showMore && (
-                          // <span>
-                          <Text
-                            color="blue"
-                            _hover={{
-                              textDecoration: "underline",
-                              cursor: "pointer",
-                            }}
-                            onClick={() =>
-                              setViewMore((prevState) => !prevState)
-                            }
-                          >
-                            {viewMore ? "View Less" : "View More"}
-                          </Text>
-                          // </span>
-                        )}
+                        {title}
                       </Text>
-                    </>
-                  )}
-                  {/* </Box> */}
-                </FlexColumn>}
+                    )}
+                    {/* <Box width="15rem"> */}
+                    {description && (
+                      <>
+                        <Text
+                          color={colorMode == "light" ? "#282828" : ""}
+                          className="m-b-0"
+                          maxW={titleMaxw ? titleMaxw : "90vw"}
+                          fontSize={style.font.h1}
+                          sx={{
+                            "@media screen and (max-width: 480px)": {
+                              fontSize: `${style.font.h3}`,
+                            },
+                          }}
+                          marginTop={gStyle.margin["xxxs"]}
+                        >
+                          {image
+                            ? viewMore
+                              ? description
+                              : truncateString(description, 110)
+                            : viewMore
+                            ? description
+                            : truncateString(description, 500)}
+
+                          {description?.length > 110 && showMore && (
+                            // <span>
+                            <Text
+                              color="blue"
+                              _hover={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={() =>
+                                setViewMore((prevState) => !prevState)
+                              }
+                            >
+                              {viewMore ? "View Less" : "View More"}
+                            </Text>
+                            // </span>
+                          )}
+                        </Text>
+                      </>
+                    )}
+                    {/* </Box> */}
+                  </FlexColumn>
+                }
 
                 {/* {!address && <ConnectWallet />} */}
                 {action_name && (
