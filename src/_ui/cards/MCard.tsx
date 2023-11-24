@@ -221,7 +221,7 @@ const MCard = ({
 
                 {video && (
                   <FlexColumn
-                    // height="60%"
+                    height="60%"
                     vrAlign="center"
                     hrAlign="flex-start"
                   >
