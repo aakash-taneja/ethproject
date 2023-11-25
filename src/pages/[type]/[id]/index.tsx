@@ -15,6 +15,8 @@ export default function LensEmbed() {
   //   }
   // }, []);
 
+  console.log("type id theme ", router.query.type, router.query.id);
+
   return (
     <div
       style={{
@@ -39,7 +41,7 @@ export default function LensEmbed() {
         }}
       >
         <iframe
-          src={`/embed?id=${router.query.id}&theme=${router.query.theme}`}
+          src={`/embed?id=${router.query.id}&theme=${router.query.theme}&type=${router.query.type}`}
           height={"100%"}
           width={"100%"}
           style={{ borderRadius: "0px" }}

@@ -2,17 +2,17 @@
 import MCard from "../../_ui/cards/MCard";
 import FlexColumn from "../../_ui/flex/FlexColumn";
 import useMeta from "@/hooks/meta/useMeta";
+import useGraph from "@/hooks/useGraph";
 import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const Index = () => {
-  const hookMeta = useMeta();
-  console.log("metas from embed : ", hookMeta?.metaData?.meta);
+  const hookGraph = useGraph();
   const router = useRouter();
   useEffect(() => {
     if (router.isReady) {
-      hookMeta._fetch(router.query.id);
+      hookGraph._fetch(router.query.id, router.query.type);
     }
   }, [router.query.id]);
 
@@ -34,22 +34,23 @@ const Index = () => {
         }
       >
         <MCard
-          // music={hookMeta?.metaData?.meta?.data?.modified?.meta_audio?.substr(
+          slug={hookGraph?.mData?.ducument?.slug}
+          colorMode={router.query.theme}
+          cardHeight="100vh"
+          action_name="Collect"
+          loading={hookGraph?.isLoading}
+          title={hookGraph?.mData?.document?.modified?.title}
+          description={hookGraph?.mData?.document?.modified?.desc}
+          media={hookGraph?.mData?.document?.modified?.media}
+          audioURL={hookGraph?.audioUrl}
+          audioCover={hookGraph?.audioCover}
+          // music={hookGraph?.mData?.meta?.data?.modified?.meta_audio?.substr(
           //   5
           // )}
-          musicplayer={hookMeta?.metaData?.meta?.data?.modified?.meta_audio}
-          title={hookMeta?.metaData?.meta?.data?.modified?.meta_title}
-          // video={hookMeta?.metaData?.meta?.data?.modified?.meta_video}
+          // musicplayer={hookGraph?.mData?.meta?.data?.modified?.meta_audio}
+          // video={hookGraph?.mData?.meta?.data?.modified?.meta_video}
           // video="https://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
-          image={hookMeta?.metaData?.meta?.data?.modified?.meta_image}
-          slug={hookMeta?.metaData?.meta?.slug}
-          description={
-            hookMeta?.metaData?.meta?.data?.modified?.meta_description
-          }
-          cardHeight="100vh"
-          colorMode={router.query.theme}
-          action_name="Collect"
-          loading={hookMeta?.isLoading}
+          // image={hookGraph?.mData?.meta?.data?.modified?.meta_image}
           // carousel_images={sample_images}
         />
       </Box>

@@ -40,12 +40,16 @@ type Props = {
   colorMode?: any;
   loading?: any;
   carousel_images?: any;
+  media?: any;
+  audioURL: string;
+  audioCover: string;
 };
 
 const MCard = ({
   image,
   video,
   title,
+  media,
   floorPrice,
   description,
   owner_name,
@@ -66,6 +70,8 @@ const MCard = ({
   colorMode,
   loading,
   carousel_images,
+  audioURL,
+  audioCover,
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -115,353 +121,317 @@ const MCard = ({
   // console.log("here is the wallet address:", address);
   return (
     <>
-      <>
-        <Box
-          height={"100%"}
-          width={"100%"}
-          borderRadius={"15px"}
-          background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          // marginRight={style.margin["sm"]}
-          // marginLeft={style.margin["sm"]}
-          // marginBottom={style.margin["lg"]}
-          overflow={"hidden"}
-          border={
-            colorMode == "light"
-              ? "1px solid #e2e2e2"
-              : gStyle.card.border.default
-          }
-          // onClick={onClick}
-          // cursor={shadowOnHover && "pointer"}
-          // flexWrap={"wrap"}
-          style={{
-            transitionTimingFunction: "ease-in-out",
-            transitionProperty: "all",
-            transitionDuration: "600ms",
-          }}
-          // _hover={{
-          //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-          //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-          // }}
-        >
-          {loading ? (
-            <Loader1 />
-          ) : (
-            <>
-              <Box
-                height={"90%"}
-                display={"flex"}
-                flexDir={"column"}
-                justifyContent={"space-between"}
-                width={"100%"}
-                borderRadius={"1.4rem"}
+      <Box
+        height={"100%"}
+        width={"100%"}
+        borderRadius={"15px"}
+        background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        // marginRight={style.margin["sm"]}
+        // marginLeft={style.margin["sm"]}
+        // marginBottom={style.margin["lg"]}
+        overflow={"hidden"}
+        border={
+          colorMode == "light"
+            ? "1px solid #e2e2e2"
+            : gStyle.card.border.default
+        }
+        // onClick={onClick}
+        // cursor={shadowOnHover && "pointer"}
+        // flexWrap={"wrap"}
+        style={{
+          transitionTimingFunction: "ease-in-out",
+          transitionProperty: "all",
+          transitionDuration: "600ms",
+        }}
+        // _hover={{
+        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+        // }}
+      >
+        {loading ? (
+          <Loader1 />
+        ) : (
+          <>
+            <Box
+              height={"90%"}
+              display={"flex"}
+              flexDir={"column"}
+              justifyContent={"flex-start"}
+              width={"100%"}
+              borderRadius={"1.4rem"}
+            >
+              <FlexRow
+                hrAlign="space-between"
+                paddingBottom="sm"
+                paddingTop="sm"
+                paddingLeft="sm"
+                paddingRight="sm"
+                // padding={style.card.padding.default}
+                height="10%"
+                vrAlign="center"
               >
-                <FlexRow
-                  hrAlign="space-between"
-                  paddingBottom="sm"
-                  paddingTop="sm"
-                  paddingLeft="sm"
-                  paddingRight="sm"
-                  // padding={style.card.padding.default}
-                  height="10%"
-                  vrAlign="center"
+                <Box
+                  onClick={() => {
+                    detailsModal.onOpen();
+                  }}
                 >
-                  <Box
-                    onClick={() => {
-                      detailsModal.onOpen();
+                  <TagNative
+                    icon={{
+                      align: "left",
+                      slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
                     }}
-                  >
-                    <TagNative
-                      icon={{
-                        align: "left",
-                        slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
-                      }}
-                      size="sm"
-                      value={slug}
-                      lineHeight="1.5rem"
-                    />
-                  </Box>
-                  <Image
-                    src={GlobalIcons["icon-wallet"]}
-                    onClick={() => {
-                      walletModal.onOpen();
-                    }}
+                    size="sm"
+                    value={slug}
+                    lineHeight="1.5rem"
                   />
-                </FlexRow>
-
-                {owner_name && (
-                  <FlexRow
-                    height="fit-content"
-                    hrAlign="center"
-                    marginBottom={"xs"}
-                  >
-                    {/* <Avatar src={owner_image} /> */}
-                    <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
-                      <Text
-                        color={colorMode == "light" ? "#282828" : ""}
-                        mb="0"
-                      >
-                        {owner_name}
-                      </Text>
-                      <Text
-                        color={colorMode == "light" ? "#282828" : ""}
-                        mb="0"
-                      >
-                        {owner_heading}
-                      </Text>
-                    </FlexColumn>
-                  </FlexRow>
-                )}
-                {carousel_images && (
-                  <Carousel colorMode={colorMode} images={carousel_images} />
-                )}
-
-                {video && (
-                  <FlexColumn
-                    height="60%"
-                    vrAlign="center"
-                    hrAlign="flex-start"
-                  >
-                    {video && (
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "center",
-                          marginBottom: `${style.margin.sm}`,
-                        }}
-                      >
-                        {/* <ReactPlayer
-                          height="100%"
-                          width="100%"
-                          url={video}
-                          controls={true}
-                          playing={true}
-                        /> */}
-                        <video
-                          src="http://ipfs.io/ipfs/QmPanjQA4yDjmbykDcCknVuUpSi835pBRzBCcZNC6P1Fep"
-                          preload="auto"
-                          controls={true}
-                          style={{ width: "100%", height: "100%" }}
-                        ></video>
-                      </div>
-                    )}
-                  </FlexColumn>
-                )}
-
-                {image && (
-                  <FlexColumn height="60%" vrAlign="flex-start">
-                    {image && (
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          padding: "1rem",
-                          background: `${
-                            colorMode == "light" ? "#efefef" : "#000A24"
-                          }`,
-                          width: "100%",
-                          // marginBottom: `${style.margin.sm}`,
-                        }}
-                      >
-                        <Image
-                          src={helperIPFS(image)}
-                          alt="coverImage"
-                          // width="100%"
-                          height="100%"
-                          objectFit={"cover"}
-                          borderRadius={gStyle.card.borderRadius.default}
-                        />
-                      </div>
-                    )}
-                  </FlexColumn>
-                )}
-
-                {
-                  <FlexColumn
-                    height={action_name ? "20%" : "30%"}
-                    vrAlign="flex-start"
-                    hrAlign="flex-start"
-                    padding={style.card.padding.default}
-                    width="100%"
-                  >
-                    {musicplayer && (
-                      <>
-                        {" "}
-                        <MusicPlayer
-                          key={musicplayer}
-                          audioUrl={`https://arweave.net/${musicplayer.substr(
-                            5,
-                            musicplayer.length - 5
-                          )}`}
-                          colorMode={colorMode}
-                        />
-                      </>
-                    )}
-                    {title && (
-                      <Text
-                        color={colorMode == "light" ? "#282828" : ""}
-                        className="m-b-0"
-                        fontSize={"xl"}
-                        fontWeight={600}
-                        marginTop={gStyle.margin["xs"]}
-                        maxW="90vw"
-                      >
-                        {title}
-                      </Text>
-                    )}
-                    {/* <Box width="15rem"> */}
-                    {description && (
-                      <>
-                        <Text
-                          color={colorMode == "light" ? "#282828" : ""}
-                          className="m-b-0"
-                          maxW={titleMaxw ? titleMaxw : "90vw"}
-                          fontSize={style.font.h1}
-                          sx={{
-                            "@media screen and (max-width: 480px)": {
-                              fontSize: `${style.font.h3}`,
-                            },
-                          }}
-                          marginTop={gStyle.margin["xxxs"]}
-                        >
-                          {image
-                            ? viewMore
-                              ? description
-                              : truncateString(description, 110)
-                            : viewMore
-                            ? description
-                            : truncateString(description, 500)}
-
-                          {description?.length > 110 && showMore && (
-                            // <span>
-                            <Text
-                              color="blue"
-                              _hover={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={() =>
-                                setViewMore((prevState) => !prevState)
-                              }
-                            >
-                              {viewMore ? "View Less" : "View More"}
-                            </Text>
-                            // </span>
-                          )}
-                        </Text>
-                      </>
-                    )}
-                    {/* </Box> */}
-                  </FlexColumn>
-                }
-
-                {/* {!address && <ConnectWallet />} */}
-                {action_name && (
-                  <FlexColumn height="10%" padding={style.card.padding.default}>
-                    {/* <ButtonNative
-                      text={action_name}
-                      variant="state_brand"
-                      width="100%"
-                      // height="100%"
-                      // marginTop="sm"
-                      marginBottom="0px"
-                      onClick={async () => {
-                        const wallet = await connect(metamaskConfig);
-                        console.log("connected to ", wallet);
-                      }}
-                    /> */}
-                  </FlexColumn>
-                )}
-              </Box>
-              <Box
-                paddingY={style.padding.xxs}
-                paddingX={style.card.padding.default}
-                borderTop={
-                  colorMode == "light"
-                    ? "1px solid #e2e2e2"
-                    : gStyle.card.border.default
-                }
-                marginTop={style.margin.md}
-                height={"10%"}
-                width={"100%"}
-                display={"flex"}
-                flexDirection={"row"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Text
-                  marginRight={style.margin.xs}
-                  color={colorMode == "light" ? "#000" : "#fff"}
-                >
-                  Powered By
-                </Text>
+                </Box>
                 <Image
-                  src={
-                    colorMode == "light"
-                      ? GlobalIcons["logo-dark-Macha"]
-                      : "/assets/MACHALogo.svg"
-                  }
-                  alt="logo"
-                  width={106}
-                  height={39}
+                  src={GlobalIcons["icon-wallet"]}
+                  onClick={() => {
+                    walletModal.onOpen();
+                  }}
                 />
-              </Box>
-            </>
-          )}
-        </Box>
-        <ModalSlider
-          event={detailsModal}
-          colorMode={colorMode}
-          header={
-            <FlexRow>
-              <Button
-                size="sm"
-                onClick={detailsModal.onClose}
-                variant="state_default_hover"
+              </FlexRow>
+
+              {owner_name && (
+                <FlexRow
+                  height="fit-content"
+                  hrAlign="center"
+                  marginBottom={"xs"}
+                >
+                  <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
+                    <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
+                      {owner_name}
+                    </Text>
+                    <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
+                      {owner_heading}
+                    </Text>
+                  </FlexColumn>
+                </FlexRow>
+              )}
+              {media?.type == "VideoMetadataV3" ? (
+                <FlexColumn height="60%" vrAlign="center" hrAlign="flex-start">
+                  <div
+                    style={{
+                      height: "100%",
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "center",
+                      marginBottom: `${style.margin.sm}`,
+                    }}
+                  >
+                    <video
+                      src={helperIPFS(media?.asset?.video?.raw?.uri)}
+                      preload="auto"
+                      controls={true}
+                      style={{ width: "100%", height: "100%" }}
+                    ></video>
+                  </div>
+                </FlexColumn>
+              ) : media?.type == "AudioMetadataV3" ? (
+                <>
+                  <div
+                    style={{
+                      height: "60%",
+                      display: "flex",
+                      justifyContent: "center",
+                      padding: "1rem",
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
+                      width: "100%",
+                    }}
+                  >
+                    <Image
+                      src={audioCover}
+                      alt="coverImage"
+                      height="100%"
+                      objectFit={"cover"}
+                      borderRadius={gStyle.card.borderRadius.default}
+                    />
+                  </div>
+                </>
+              ) : (
+                <FlexColumn height="60%" vrAlign="flex-start">
+                  <div
+                    style={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      padding: "1rem",
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
+                      width: "100%",
+                    }}
+                  >
+                    <Image
+                      src={helperIPFS(media?.asset?.image?.raw?.uri)}
+                      alt="coverImage"
+                      height="100%"
+                      objectFit={"cover"}
+                      borderRadius={gStyle.card.borderRadius.default}
+                    />
+                  </div>
+                </FlexColumn>
+              )}
+              {/* {carousel_images && (
+                <Carousel colorMode={colorMode} images={carousel_images} />
+              )} */}
+
+              <FlexColumn
+                height={action_name ? "20%" : "30%"}
+                vrAlign="flex-start"
+                hrAlign="flex-start"
+                padding={style.card.padding.default}
+                width="100%"
               >
-                Cancel
-              </Button>
-            </FlexRow>
-          }
-        >
-          <FlexColumn height="300px">
-            <Text color={colorMode == "light" ? "#000" : "#fff"}>
-              Hello macha
-            </Text>
-          </FlexColumn>
-        </ModalSlider>
-        <ModalSlider
-          event={walletModal}
-          colorMode={colorMode}
-          header={
-            <FlexRow>
+                {media?.type == "AudioMetadataV3" && (
+                  <MusicPlayer
+                    key={musicplayer}
+                    audioUrl={audioURL}
+                    colorMode={colorMode}
+                  />
+                )}
+                {title && (
+                  <Text
+                    color={colorMode == "light" ? "#282828" : ""}
+                    className="m-b-0"
+                    fontSize={"xl"}
+                    fontWeight={600}
+                    marginTop={gStyle.margin["xs"]}
+                    maxW="90vw"
+                  >
+                    {title}
+                  </Text>
+                )}
+                {description && (
+                  <>
+                    <Text
+                      color={colorMode == "light" ? "#282828" : ""}
+                      className="m-b-0"
+                      maxW={titleMaxw ? titleMaxw : "90vw"}
+                      fontSize={style.font.h1}
+                      sx={{
+                        "@media screen and (max-width: 480px)": {
+                          fontSize: `${style.font.h3}`,
+                        },
+                      }}
+                      marginTop={gStyle.margin["xxxs"]}
+                    >
+                      {image
+                        ? viewMore
+                          ? description
+                          : truncateString(description, 110)
+                        : viewMore
+                        ? description
+                        : truncateString(description, 500)}
+
+                      {description?.length > 110 && showMore && (
+                        // <span>
+                        <Text
+                          color="blue"
+                          _hover={{
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => setViewMore((prevState) => !prevState)}
+                        >
+                          {viewMore ? "View Less" : "View More"}
+                        </Text>
+                        // </span>
+                      )}
+                    </Text>
+                  </>
+                )}
+              </FlexColumn>
+            </Box>
+            <Box
+              paddingY={style.padding.xxs}
+              paddingX={style.card.padding.default}
+              borderTop={
+                colorMode == "light"
+                  ? "1px solid #e2e2e2"
+                  : gStyle.card.border.default
+              }
+              marginTop={style.margin.md}
+              height={"10%"}
+              width={"100%"}
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Text
+                marginRight={style.margin.xs}
+                color={colorMode == "light" ? "#000" : "#fff"}
+              >
+                Powered By
+              </Text>
               <Image
-                src={GlobalIcons["icon-chevron-down"]}
-                onClick={walletModal.onClose}
+                src={
+                  colorMode == "light"
+                    ? GlobalIcons["logo-dark-Macha"]
+                    : "/assets/MACHALogo.svg"
+                }
+                alt="logo"
+                width={106}
+                height={39}
               />
-            </FlexRow>
-          }
-        >
-          <FlexColumn height="300px" hrAlign="flex-start">
-            <ConnectWallet
-              style={{
-                marginBottom: `${style.margin.md}`,
-                width: "100%",
-                background: `${style.button.bg.active}`,
-                color: "white",
-              }}
-              theme={colorMode == "light" ? "light" : "dark"}
-              modalSize="compact"
+            </Box>
+          </>
+        )}
+      </Box>
+      <ModalSlider
+        event={detailsModal}
+        colorMode={colorMode}
+        header={
+          <FlexRow>
+            <Button
+              size="sm"
+              onClick={detailsModal.onClose}
+              variant="state_default_hover"
+            >
+              Cancel
+            </Button>
+          </FlexRow>
+        }
+      >
+        <FlexColumn height="300px">
+          <Text color={colorMode == "light" ? "#000" : "#fff"}>
+            Hello macha
+          </Text>
+        </FlexColumn>
+      </ModalSlider>
+      <ModalSlider
+        event={walletModal}
+        colorMode={colorMode}
+        header={
+          <FlexRow>
+            <Image
+              src={GlobalIcons["icon-chevron-down"]}
+              onClick={walletModal.onClose}
             />
-          </FlexColumn>
-        </ModalSlider>
-      </>
+          </FlexRow>
+        }
+      >
+        <FlexColumn height="300px" hrAlign="flex-start">
+          <ConnectWallet
+            style={{
+              marginBottom: `${style.margin.md}`,
+              width: "100%",
+              background: `${style.button.bg.active}`,
+              color: "white",
+            }}
+            theme={colorMode == "light" ? "light" : "dark"}
+            modalSize="compact"
+          />
+        </FlexColumn>
+      </ModalSlider>
     </>
   );
 };
