@@ -255,6 +255,8 @@ const MCard = ({
                     />
                   </div>
                 </>
+              ) : media?.type == "TextOnlyMetadataV3" ? (
+                <></>
               ) : (
                 <FlexColumn height="60%" vrAlign="flex-start">
                   <div
@@ -284,9 +286,11 @@ const MCard = ({
               )} */}
 
               <FlexColumn
-                height={action_name ? "20%" : "30%"}
+                height={media?.type == "TextOnlyMetadataV3" ? "100%" : "30%"}
                 vrAlign="flex-start"
-                hrAlign="flex-start"
+                hrAlign={
+                  media?.type == "TextOnlyMetadataV3" ? "center" : "flex-start"
+                }
                 padding={style.card.padding.default}
                 width="100%"
               >

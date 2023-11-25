@@ -34,7 +34,7 @@ const Index = () => {
         }
       >
         <MCard
-          slug={hookGraph?.mData?.ducument?.slug}
+          slug={hookGraph?.mData?.document?.slug}
           colorMode={router.query.theme}
           cardHeight="100vh"
           action_name="Collect"
