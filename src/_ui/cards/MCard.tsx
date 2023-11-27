@@ -6,15 +6,23 @@ import { slugToLogoMapping } from "@/data/meta";
 import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { style as gStyle, style } from "@/styles/StyledConstants";
-import { ConnectWallet, Web3Button, metamaskWallet, useAddress, useConnect } from "@thirdweb-dev/react";
+import {
+  ConnectWallet,
+  Web3Button,
+  metamaskWallet,
+  useAddress,
+  useConnect,
+} from "@thirdweb-dev/react";
 import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef, useState, useEffect } from "react";
 import Loader1 from "../loader/Loader1";
 import ModalSlider from "../modal/ModalSlider";
 import Carousel from "./Carousel";
-import lenshubAbi from "../../data/lenshubAbi.json"
+import lenshubAbi from "../../data/lenshubAbi.json";
 import { AbiCoder } from "ethers/lib/utils";
+import { ethers } from "ethers";
+import ButtonNative from "../buttons/ButtonNative";
 
 type Props = {
   title?: string;
@@ -71,7 +79,7 @@ const MCard = ({
   loading,
   carousel_images,
   audioURL,
-  audioCover
+  audioCover,
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -81,25 +89,48 @@ const MCard = ({
   const walletModal = useDisclosure();
   const connect = useConnect();
   const metamaskConfig = metamaskWallet();
-  let args: any[] = []
-  const abiCoder = new AbiCoder()
+  let args: any[] = [];
+  const abiCoder = new AbiCoder();
   const address = useAddress();
+  let contract: any;
 
   useEffect(() => {
     if (router.isReady) {
       if (router.query.id) {
         if (address) {
-          const id = router.query.id.toString().split("-")
-          const profileId = parseInt(id[0])
-          const publicationId = parseInt(id[1])
-          let actionModuleData = abiCoder.encode(["address"], [address])
-          actionModuleData = actionModuleData + "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-          args = [profileId, publicationId, 115352, [], [], "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB", actionModuleData]
-          console.log("args", args)
+          const id = router.query.id.toString().split("-");
+          const profileId = parseInt(id[0]);
+          const publicationId = parseInt(id[1]);
+          let actionModuleData = abiCoder.encode(["address"], [address]);
+          actionModuleData =
+            actionModuleData +
+            "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+          args = [
+            profileId,
+            publicationId,
+            115352,
+            [],
+            [],
+            "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
+            actionModuleData,
+          ];
+          console.log("args", args);
+        }
+        if (typeof window !== "undefined" && window.ethereum) {
+          const provider = new ethers.providers.Web3Provider(
+            window?.ethereum as ethers.providers.ExternalProvider
+          );
+          const signer = provider.getSigner();
+          contract = new ethers.Contract(
+            "0xdb46d1dc155634fbc732f92e853b10b288ad5a1d",
+            lenshubAbi,
+            signer
+          );
+          console.log("window.ethereum defined", contract);
         }
       }
     }
-  }, [router, address])
+  }, [router, address]);
   const playAudio = (e: any) => {
     setIsPlaying(true);
     e.stopPropagation();
@@ -165,10 +196,10 @@ const MCard = ({
           transitionProperty: "all",
           transitionDuration: "600ms",
         }}
-      // _hover={{
-      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-      // }}
+        // _hover={{
+        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+        // }}
       >
         {loading ? (
           <Loader1 />
@@ -258,8 +289,9 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
-                        }`,
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
                       width: "100%",
                     }}
                   >
@@ -282,8 +314,9 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
-                        }`,
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
                       width: "100%",
                     }}
                   >
@@ -348,8 +381,8 @@ const MCard = ({
                           ? description
                           : truncateString(description, 110)
                         : viewMore
-                          ? description
-                          : truncateString(description, 500)}
+                        ? description
+                        : truncateString(description, 500)}
 
                       {description?.length > 110 && showMore && (
                         // <span>
@@ -370,12 +403,43 @@ const MCard = ({
                 )}
               </FlexColumn>
               <FlexColumn>
-                <Web3Button
+                <ButtonNative
+                  text="Claim"
+                  onClick={async () => {
+                    if (contract) {
+                      await contract.act([
+                        91144,
+                        155,
+                        115352,
+                        [],
+                        [],
+                        0x0d90c58cbe787cd70b5effe94ce58185d72143fb,
+                        0x00000000000000000000000026a5a637dae1487e6a0a677ffcf4e93c52a5bdc90000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+                      ]);
+                    } else {
+                      console.log("contract undefined", contract);
+                    }
+                  }}
+                />
+                {/* <Web3Button
                   contractAddress="0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d"
                   contractAbi={lenshubAbi}
-                  action={(contract) => contract.call("act", [{ publicationActedProfileId: 91144, publicationActedId: 
-                    155, actorProfileId: 115352, referrerProfileIds: [], referrerPubIds:[], actionModuleAddress: "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB", actionModuleData: "0x000000000000000000000000ad4a660d84c36ab64ece3bb7c4e3f768e664589c0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" }])}
-                >Claim</Web3Button>
+                  action={(contract) =>
+                    contract.call("act", [
+                      [
+                        91144,
+                        155,
+                        115352,
+                        [],
+                        [],
+                        "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
+                        "0x000000000000000000000000f1Ce3433B0e4310A2055EcdDE428FbBA5A508DF00000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                      ],
+                    ])
+                  }
+                >
+                  Claim
+                </Web3Button> */}
               </FlexColumn>
             </Box>
             <Box
