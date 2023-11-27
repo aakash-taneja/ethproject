@@ -4,15 +4,19 @@ import FlexColumn from "../../_ui/flex/FlexColumn";
 import useMeta from "@/hooks/meta/useMeta";
 import useGraph from "@/hooks/useGraph";
 import { Box } from "@chakra-ui/react";
+import { AbiCoder } from "ethers/lib/utils";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { useAddress } from "@thirdweb-dev/react";
 
 const Index = () => {
   const hookGraph = useGraph();
   const router = useRouter();
   useEffect(() => {
     if (router.isReady) {
-      hookGraph._fetch(router.query.id, router.query.type);
+      if (router.query.id) {
+        hookGraph._fetch(router.query.id, router.query.type);
+      }
     }
   }, [router.query.id]);
 
@@ -20,6 +24,7 @@ const Index = () => {
     "https://cdn.zeebiz.com/sites/default/files/styles/zeebiz_850x478/public/2022/06/17/186446-l1.jpg?itok=JbCGzL61",
     "https://imgd.aeplcdn.com/600x600/n/cw/ec/48687/lamborghini-aventador-left-front-three-quarter0.jpeg?wm=0",
   ];
+
 
   return (
     <FlexColumn height="100vh" vrAlign="center" hrAlign="center" width="100%">
@@ -44,14 +49,14 @@ const Index = () => {
           media={hookGraph?.mData?.document?.modified?.media}
           audioURL={hookGraph?.audioUrl}
           audioCover={hookGraph?.audioCover}
-          // music={hookGraph?.mData?.meta?.data?.modified?.meta_audio?.substr(
-          //   5
-          // )}
-          // musicplayer={hookGraph?.mData?.meta?.data?.modified?.meta_audio}
-          // video={hookGraph?.mData?.meta?.data?.modified?.meta_video}
-          // video="https://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
-          // image={hookGraph?.mData?.meta?.data?.modified?.meta_image}
-          // carousel_images={sample_images}
+        // music={hookGraph?.mData?.meta?.data?.modified?.meta_audio?.substr(
+        //   5
+        // )}
+        // musicplayer={hookGraph?.mData?.meta?.data?.modified?.meta_audio}
+        // video={hookGraph?.mData?.meta?.data?.modified?.meta_video}
+        // video="https://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
+        // image={hookGraph?.mData?.meta?.data?.modified?.meta_image}
+        // carousel_images={sample_images}
         />
       </Box>
     </FlexColumn>

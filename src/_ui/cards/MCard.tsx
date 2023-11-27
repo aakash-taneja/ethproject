@@ -1,4 +1,3 @@
-import ButtonNative from "@/_ui/buttons/ButtonNative";
 import FlexColumn from "@/_ui/flex/FlexColumn";
 import FlexRow from "@/_ui/flex/FlexRow";
 import TagNative from "@/_ui/tag/TagNative";
@@ -7,14 +6,15 @@ import { slugToLogoMapping } from "@/data/meta";
 import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { style as gStyle, style } from "@/styles/StyledConstants";
-import { ConnectWallet, metamaskWallet, useConnect } from "@thirdweb-dev/react";
+import { ConnectWallet, Web3Button, metamaskWallet, useAddress, useConnect } from "@thirdweb-dev/react";
 import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Loader1 from "../loader/Loader1";
 import ModalSlider from "../modal/ModalSlider";
 import Carousel from "./Carousel";
-import ReactPlayer from "react-player";
+import lenshubAbi from "../../data/lenshubAbi.json"
+import { AbiCoder } from "ethers/lib/utils";
 
 type Props = {
   title?: string;
@@ -71,7 +71,7 @@ const MCard = ({
   loading,
   carousel_images,
   audioURL,
-  audioCover,
+  audioCover
 }: Props) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -81,7 +81,25 @@ const MCard = ({
   const walletModal = useDisclosure();
   const connect = useConnect();
   const metamaskConfig = metamaskWallet();
+  let args: any[] = []
+  const abiCoder = new AbiCoder()
+  const address = useAddress();
 
+  useEffect(() => {
+    if (router.isReady) {
+      if (router.query.id) {
+        if (address) {
+          const id = router.query.id.toString().split("-")
+          const profileId = parseInt(id[0])
+          const publicationId = parseInt(id[1])
+          let actionModuleData = abiCoder.encode(["address"], [address])
+          actionModuleData = actionModuleData + "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          args = [profileId, publicationId, 115352, [], [], "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB", actionModuleData]
+          console.log("args", args)
+        }
+      }
+    }
+  }, [router, address])
   const playAudio = (e: any) => {
     setIsPlaying(true);
     e.stopPropagation();
@@ -147,10 +165,10 @@ const MCard = ({
           transitionProperty: "all",
           transitionDuration: "600ms",
         }}
-        // _hover={{
-        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-        // }}
+      // _hover={{
+      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+      // }}
       >
         {loading ? (
           <Loader1 />
@@ -240,9 +258,8 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
+                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                       width: "100%",
                     }}
                   >
@@ -265,9 +282,8 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
+                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                       width: "100%",
                     }}
                   >
@@ -332,8 +348,8 @@ const MCard = ({
                           ? description
                           : truncateString(description, 110)
                         : viewMore
-                        ? description
-                        : truncateString(description, 500)}
+                          ? description
+                          : truncateString(description, 500)}
 
                       {description?.length > 110 && showMore && (
                         // <span>
@@ -352,6 +368,14 @@ const MCard = ({
                     </Text>
                   </>
                 )}
+              </FlexColumn>
+              <FlexColumn>
+                <Web3Button
+                  contractAddress="0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d"
+                  contractAbi={lenshubAbi}
+                  action={(contract) => contract.call("act", [{ publicationActedProfileId: 91144, publicationActedId: 
+                    155, actorProfileId: 115352, referrerProfileIds: [], referrerPubIds:[], actionModuleAddress: "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB", actionModuleData: "0x000000000000000000000000ad4a660d84c36ab64ece3bb7c4e3f768e664589c0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" }])}
+                >Claim</Web3Button>
               </FlexColumn>
             </Box>
             <Box
