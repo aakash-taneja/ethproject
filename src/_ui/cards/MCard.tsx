@@ -412,11 +412,11 @@ const MCard = ({
                       }
                     }}
                   />
-                ): (
+                ) : (
                   <Web3Button style={{
                     width: "95%",
                     height: "5rem"
-                  }} contractAddress="" action={() => {}} />
+                  }} contractAddress="" action={() => { }} />
                 )}
               </FlexColumn>
             </Box>
@@ -489,8 +489,12 @@ const MCard = ({
           </FlexRow>
         }
       >
-        <FlexColumn height="300px" hrAlign="flex-start">
+        <FlexColumn height="150px" hrAlign="flex-start">
           <ConnectWallet
+            dropdownPosition={{
+              side: "bottom",
+              align: "center"
+            }}
             style={{
               marginBottom: `${style.margin.md}`,
               width: "100%",
