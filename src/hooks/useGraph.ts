@@ -10,9 +10,7 @@ const useGraph = () => {
 
   const _fetch = async (id: any, type: any) => {
     const data = {
-      data: {
-        forId: id,
-      },
+      data: id,
     };
     const res = await graphQuery(type, data);
     const audiodata = await fetchArweaveData(
