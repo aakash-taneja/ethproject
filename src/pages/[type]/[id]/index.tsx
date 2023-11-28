@@ -15,7 +15,7 @@ export default function LensEmbed() {
   //   }
   // }, []);
 
-  console.log("type id theme ", router.query.type, router.query.id);
+  // console.log("type id theme ", router.query.type, router.query.id);
 
   return (
     <div

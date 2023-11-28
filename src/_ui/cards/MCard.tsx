@@ -112,12 +112,12 @@ const MCard = ({
   //   !address && setIsWalletModalOpen(true);
   // };
 
-  console.log(
-    "color mode is ",
-    colorMode,
-    "type of colorMode",
-    typeof colorMode
-  );
+  // console.log(
+  //   "color mode is ",
+  //   colorMode,
+  //   "type of colorMode",
+  //   typeof colorMode
+  // );
   // console.log("here is the wallet address:", address);
   return (
     <>
