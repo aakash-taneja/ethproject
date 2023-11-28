@@ -4,7 +4,7 @@ export type SearchInterface = {
   slug?: any;
   owner?: any;
   limit?: any;
-  page?:any;
+  page?: any;
   next?: any;
 };
 
@@ -13,7 +13,12 @@ export type MetaSearchInterface = {
   slug?: any;
   owner?: any;
   limit?: any;
-  uid?:any;
-  page?:any;
+  uid?: any;
+  page?: any;
   next?: any;
+};
+
+export type MetaRequestInterface = {
+  type?: string;
+  id?: string;
 };

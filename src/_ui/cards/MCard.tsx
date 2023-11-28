@@ -1,177 +1,60 @@
 import FlexColumn from "@/_ui/flex/FlexColumn";
 import FlexRow from "@/_ui/flex/FlexRow";
-import TagNative from "@/_ui/tag/TagNative";
-import MusicPlayer from "@/components/MusicPlayer";
-import { slugToLogoMapping } from "@/data/meta";
-import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { style as gStyle, style } from "@/styles/StyledConstants";
-import {
-  ConnectWallet,
-  Web3Button,
-  metamaskWallet,
-  useAddress,
-  useConnect,
-} from "@thirdweb-dev/react";
 import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useRef, useState, useEffect } from "react";
+import { ConnectWallet } from "@thirdweb-dev/react";
 import Loader1 from "../loader/Loader1";
 import ModalSlider from "../modal/ModalSlider";
-import Carousel from "./Carousel";
-import lenshubAbi from "../../data/lenshubAbi.json";
-import { AbiCoder } from "ethers/lib/utils";
-import { ethers } from "ethers";
-import ButtonNative from "../buttons/ButtonNative";
-import { graphQuery } from "@/service/MetaService";
+import Mcontent from "./Mcontent";
+import Mheader from "./Mheader";
+import Msearch from "./Msearch";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import useSearch from "@/hooks/useSearch";
+import useGraph from "@/hooks/useGraph";
 
 type Props = {
-  title?: string;
-  image?: string;
-  video?: string;
-  floorPrice?: string;
-  description?: string;
-  owner_name?: string;
-  owner_image?: string;
-  owner_heading?: string;
-  action_name?: string;
-  action_type?: string;
-  action_value?: string;
-  width?: string;
-  onClick?: any;
   slug?: any;
-  cardHeight?: any;
-  music?: any;
-  titleMaxw?: any;
-  musicplayer?: any;
-  shadowOnHover?: any;
-  showMore?: boolean;
   colorMode?: any;
   loading?: any;
-  carousel_images?: any;
-  media?: any;
-  audioURL: string;
-  audioCover: string;
 };
 
-const MCard = ({
-  image,
-  video,
-  title,
-  media,
-  floorPrice,
-  description,
-  owner_name,
-  owner_heading,
-  owner_image,
-  action_name,
-  action_type,
-  action_value,
-  width,
-  onClick,
-  slug,
-  cardHeight,
-  titleMaxw,
-  music,
-  musicplayer,
-  shadowOnHover = true,
-  showMore,
-  colorMode,
-  loading,
-  carousel_images,
-  audioURL,
-  audioCover,
-}: Props) => {
-  const router = useRouter();
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [viewMore, setViewMore] = useState<boolean>(false);
+const MCard = ({ colorMode }: Props) => {
   const detailsModal = useDisclosure();
   const walletModal = useDisclosure();
-  const connect = useConnect();
-  const metamaskConfig = metamaskWallet();
-  const abiCoder = new AbiCoder();
-  const address = useAddress();
-  const [contract, setContract] = useState<any>();
-  const [args, setArgs] = useState<any>();
+  const router = useRouter();
+  const hookSearch = useSearch();
+  const hookGraph = useGraph();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [metaRequest, setMetaRequest] = useState<any>();
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (router.isReady) {
-        if (router.query.id) {
-          if (address) {
-            const actorProfileId = await getActorProfileId(address);
-            const id = router.query.id.toString().split("-");
-            const profileId = parseInt(id[0]);
-            const publicationId = parseInt(id[1]);
-            let actionModuleData = abiCoder.encode(["address"], [address]);
-            actionModuleData =
-              actionModuleData +
-              "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-            setArgs([
-              profileId,
-              publicationId,
-              actorProfileId,
-              [],
-              [],
-              "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
-              actionModuleData,
-            ]);
-            console.log("args", [
-              profileId,
-              publicationId,
-              actorProfileId,
-              [],
-              [],
-              "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
-              actionModuleData,
-            ]);
-          }
-          if (typeof window !== "undefined" && window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(
-              window?.ethereum as ethers.providers.ExternalProvider
-            );
-            const signer = provider.getSigner();
-            setContract(
-              new ethers.Contract(
-                "0xdb46d1dc155634fbc732f92e853b10b288ad5a1d",
-                lenshubAbi,
-                signer
-              )
-            );
-          }
-          // console.log("window.ethereum defined", contract);
-        }
+    if (router.isReady) {
+      if (router.query.id && router.query.type) {
+        setMetaRequest({ id: router.query.id, type: router.query.type });
       }
-    };
-    fetchData();
-  }, [router, address]);
-
-  const getActorProfileId = async (address: any) => {
-    const data = {
-      data: address,
-    };
-    const res = await graphQuery("lens_id", data);
-    return parseInt(res?.modified?.lensId);
-  };
-
-  const playAudio = (e: any) => {
-    setIsPlaying(true);
-    e.stopPropagation();
-    if (audioRef.current) {
-      audioRef.current.play();
     }
-  };
-  const stopAudio = (e: any) => {
-    setIsPlaying(false);
-    e.stopPropagation();
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-  };
-  const handleAudioEnded = () => {
-    setIsPlaying(false); // Update isPlaying to false when audio ends
-  };
+  }, [router.query.id]);
+
+  // const playAudio = (e: any) => {
+  //   setIsPlaying(true);
+  //   e.stopPropagation();
+  //   if (audioRef.current) {
+  //     audioRef.current.play();
+  //   }
+  // };
+  // const stopAudio = (e: any) => {
+  //   setIsPlaying(false);
+  //   e.stopPropagation();
+  //   if (audioRef.current) {
+  //     audioRef.current.pause();
+  //   }
+  // };
+  // const handleAudioEnded = () => {
+  //   setIsPlaying(false); // Update isPlaying to false when audio ends
+  // };
 
   // console.log("theme is ", router.asPath);
   // if (router.query.theme == "dark") {
@@ -201,7 +84,7 @@ const MCard = ({
         background={colorMode == "light" ? "rgba(255,255,255,1)" : "#030c1a"}
         display={"flex"}
         flexDirection={"column"}
-        justifyContent={"center"}
+        justifyContent={"space-between"}
         alignItems={"center"}
         // marginRight={style.margin["sm"]}
         // marginLeft={style.margin["sm"]}
@@ -229,230 +112,18 @@ const MCard = ({
           <Loader1 />
         ) : (
           <>
-            <Box
-              height={"90%"}
-              display={"flex"}
-              flexDir={"column"}
-              justifyContent={"flex-start"}
-              width={"100%"}
-              borderRadius={"1.4rem"}
-            >
-              <FlexRow
-                hrAlign="space-between"
-                paddingBottom="sm"
-                paddingTop="sm"
-                paddingLeft="sm"
-                paddingRight="sm"
-                // padding={style.card.padding.default}
-                height="10%"
-                vrAlign="center"
-              >
-                <Box
-                  onClick={() => {
-                    detailsModal.onOpen();
-                  }}
-                >
-                  <TagNative
-                    icon={{
-                      align: "left",
-                      slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
-                    }}
-                    size="sm"
-                    value={slug}
-                    lineHeight="1.5rem"
-                  />
-                </Box>
-                <Image
-                  src={GlobalIcons["icon-wallet"]}
-                  onClick={() => {
-                    walletModal.onOpen();
-                  }}
-                />
-              </FlexRow>
+            <Mheader detailsModal={detailsModal} walletModal={walletModal} />
+            {router.query.mode == "search" && (
+              <Msearch hookSearch={hookSearch} />
+            )}
+            {router.query.mode == "meta" && (
+              <Mcontent
+                hookGraph={hookGraph}
+                metaId={metaRequest?.id}
+                metaType={metaRequest?.type}
+              />
+            )}
 
-              {owner_name && (
-                <FlexRow
-                  height="fit-content"
-                  hrAlign="center"
-                  marginBottom={"xs"}
-                >
-                  <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
-                    <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
-                      {owner_name}
-                    </Text>
-                    <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
-                      {owner_heading}
-                    </Text>
-                  </FlexColumn>
-                </FlexRow>
-              )}
-              {media?.type == "VideoMetadataV3" ? (
-                <FlexColumn height="60%" vrAlign="center" hrAlign="flex-start">
-                  <div
-                    style={{
-                      height: "100%",
-                      display: "flex",
-                      width: "100%",
-                      justifyContent: "center",
-                      marginBottom: `${style.margin.sm}`,
-                    }}
-                  >
-                    <video
-                      src={helperIPFS(media?.asset?.video?.raw?.uri)}
-                      preload="auto"
-                      controls={true}
-                      style={{ width: "100%", height: "100%" }}
-                    ></video>
-                  </div>
-                </FlexColumn>
-              ) : media?.type == "AudioMetadataV3" ? (
-                <>
-                  <div
-                    style={{
-                      height: "60%",
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
-                      width: "100%",
-                    }}
-                  >
-                    <Image
-                      src={audioCover}
-                      alt="coverImage"
-                      height="100%"
-                      objectFit={"cover"}
-                      borderRadius={gStyle.card.borderRadius.default}
-                    />
-                  </div>
-                </>
-              ) : media?.type == "TextOnlyMetadataV3" ? (
-                <></>
-              ) : (
-                <FlexColumn height="60%" vrAlign="flex-start">
-                  <div
-                    style={{
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
-                      width: "100%",
-                    }}
-                  >
-                    <Image
-                      src={helperIPFS(media?.asset?.image?.raw?.uri)}
-                      alt="coverImage"
-                      height="100%"
-                      objectFit={"cover"}
-                      borderRadius={gStyle.card.borderRadius.default}
-                    />
-                  </div>
-                </FlexColumn>
-              )}
-              {/* {carousel_images && (
-                <Carousel colorMode={colorMode} images={carousel_images} />
-              )} */}
-
-              <FlexColumn
-                height={media?.type == "TextOnlyMetadataV3" ? "100%" : "30%"}
-                vrAlign="flex-start"
-                hrAlign={
-                  media?.type == "TextOnlyMetadataV3" ? "center" : "flex-start"
-                }
-                padding={style.card.padding.default}
-                width="100%"
-              >
-                {media?.type == "AudioMetadataV3" && (
-                  <MusicPlayer
-                    key={musicplayer}
-                    audioUrl={audioURL}
-                    colorMode={colorMode}
-                  />
-                )}
-                {title && (
-                  <Text
-                    color={colorMode == "light" ? "#282828" : ""}
-                    className="m-b-0"
-                    fontSize={"xl"}
-                    fontWeight={600}
-                    marginTop={gStyle.margin["xs"]}
-                    maxW="90vw"
-                  >
-                    {title}
-                  </Text>
-                )}
-                {description && (
-                  <>
-                    <Text
-                      color={colorMode == "light" ? "#282828" : ""}
-                      className="m-b-0"
-                      maxW={titleMaxw ? titleMaxw : "90vw"}
-                      fontSize={style.font.h1}
-                      sx={{
-                        "@media screen and (max-width: 480px)": {
-                          fontSize: `${style.font.h3}`,
-                        },
-                      }}
-                      marginTop={gStyle.margin["xxxs"]}
-                    >
-                      {image
-                        ? viewMore
-                          ? description
-                          : truncateString(description, 110)
-                        : viewMore
-                        ? description
-                        : truncateString(description, 500)}
-
-                      {description?.length > 110 && showMore && (
-                        // <span>
-                        <Text
-                          color="blue"
-                          _hover={{
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => setViewMore((prevState) => !prevState)}
-                        >
-                          {viewMore ? "View Less" : "View More"}
-                        </Text>
-                        // </span>
-                      )}
-                    </Text>
-                  </>
-                )}
-              </FlexColumn>
-              <FlexColumn>
-                {address ? (
-                  <ButtonNative
-                    variant="state_default_hover"
-                    height="5rem"
-                    width="95%"
-                    text="Claim"
-                    onClick={async () => {
-                      if (contract) {
-                        await contract.act(args);
-                      } else {
-                        console.log("contract undefined", contract);
-                      }
-                    }}
-                  />
-                ) : (
-                  <Web3Button
-                    style={{
-                      width: "95%",
-                      height: "5rem",
-                    }}
-                    contractAddress=""
-                    action={() => {}}
-                  />
-                )}
-              </FlexColumn>
-            </Box>
             <Box
               paddingY={style.padding.xxs}
               paddingX={style.card.padding.default}

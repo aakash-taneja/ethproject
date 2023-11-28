@@ -133,6 +133,9 @@ const theme = extendTheme({
       ".tw-connected-wallet__address": {
         color: "#fff!important",
       },
+      ".css-10pwobq::-webkit-scrollbar ": {
+        display: "none",
+      },
     }),
   },
   textStyles: {},

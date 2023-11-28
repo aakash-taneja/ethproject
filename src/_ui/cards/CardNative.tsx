@@ -67,7 +67,7 @@ const CardNative = ({
       cursor={shadowOnHover && "pointer"}
       _hover={{
         border: `${shadowOnHover && gStyle.card.border.meta}`,
-        boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+        boxShadow: `${shadowOnHover && "-0.15px 0.15px 12px 0px #004AD9"}`,
       }}
       className="cardNative_container"
     >
