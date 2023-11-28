@@ -23,6 +23,7 @@ import lenshubAbi from "../../data/lenshubAbi.json";
 import { AbiCoder } from "ethers/lib/utils";
 import { ethers } from "ethers";
 import ButtonNative from "../buttons/ButtonNative";
+import { graphQuery } from "@/service/MetaService";
 
 type Props = {
   title?: string;
@@ -91,46 +92,68 @@ const MCard = ({
   const metamaskConfig = metamaskWallet();
   const abiCoder = new AbiCoder();
   const address = useAddress();
-  const [contract, setContract] = useState<any>()
-  const [args, setArgs] = useState<any>()
+  const [contract, setContract] = useState<any>();
+  const [args, setArgs] = useState<any>();
 
   useEffect(() => {
-    if (router.isReady) {
-      if (router.query.id) {
-        if (address) {
-          const id = router.query.id.toString().split("-");
-          const profileId = parseInt(id[0]);
-          const publicationId = parseInt(id[1]);
-          let actionModuleData = abiCoder.encode(["address"], [address]);
-          actionModuleData =
-            actionModuleData +
-            "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-          setArgs([
-            profileId,
-            publicationId,
-            115352,
-            [],
-            [],
-            "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
-            actionModuleData,
-          ]);
-          console.log("args", args);
+    const fetchData = async () => {
+      if (router.isReady) {
+        if (router.query.id) {
+          if (address) {
+            const actorProfileId = await getActorProfileId(address);
+            const id = router.query.id.toString().split("-");
+            const profileId = parseInt(id[0]);
+            const publicationId = parseInt(id[1]);
+            let actionModuleData = abiCoder.encode(["address"], [address]);
+            actionModuleData =
+              actionModuleData +
+              "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+            setArgs([
+              profileId,
+              publicationId,
+              actorProfileId,
+              [],
+              [],
+              "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
+              actionModuleData,
+            ]);
+            console.log("args", [
+              profileId,
+              publicationId,
+              actorProfileId,
+              [],
+              [],
+              "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
+              actionModuleData,
+            ]);
+          }
+          if (typeof window !== "undefined" && window.ethereum) {
+            const provider = new ethers.providers.Web3Provider(
+              window?.ethereum as ethers.providers.ExternalProvider
+            );
+            const signer = provider.getSigner();
+            setContract(
+              new ethers.Contract(
+                "0xdb46d1dc155634fbc732f92e853b10b288ad5a1d",
+                lenshubAbi,
+                signer
+              )
+            );
+          }
+          // console.log("window.ethereum defined", contract);
         }
-        if (typeof window !== "undefined" && window.ethereum) {
-          const provider = new ethers.providers.Web3Provider(
-            window?.ethereum as ethers.providers.ExternalProvider
-          );
-          const signer = provider.getSigner();
-          setContract(new ethers.Contract(
-            "0xdb46d1dc155634fbc732f92e853b10b288ad5a1d",
-            lenshubAbi,
-            signer
-          ))
-        }
-        console.log("window.ethereum defined", contract);
       }
-    }
+    };
+    fetchData();
   }, [router, address]);
+
+  const getActorProfileId = async (address: any) => {
+    const data = {
+      data: address,
+    };
+    const res = await graphQuery("lens_id", data);
+    return parseInt(res?.modified?.lensId);
+  };
 
   const playAudio = (e: any) => {
     setIsPlaying(true);
@@ -197,10 +220,10 @@ const MCard = ({
           transitionProperty: "all",
           transitionDuration: "600ms",
         }}
-      // _hover={{
-      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-      // }}
+        // _hover={{
+        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+        // }}
       >
         {loading ? (
           <Loader1 />
@@ -290,8 +313,9 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
-                        }`,
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
                       width: "100%",
                     }}
                   >
@@ -314,8 +338,9 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
-                        }`,
+                      background: `${
+                        colorMode == "light" ? "#efefef" : "#000A24"
+                      }`,
                       width: "100%",
                     }}
                   >
@@ -380,8 +405,8 @@ const MCard = ({
                           ? description
                           : truncateString(description, 110)
                         : viewMore
-                          ? description
-                          : truncateString(description, 500)}
+                        ? description
+                        : truncateString(description, 500)}
 
                       {description?.length > 110 && showMore && (
                         // <span>
@@ -403,8 +428,12 @@ const MCard = ({
               </FlexColumn>
               <FlexColumn>
                 {address ? (
-                  <ButtonNative variant="state_default_hover" height="5rem" width="95%"
-                    text="Claim" onClick={async () => {
+                  <ButtonNative
+                    variant="state_default_hover"
+                    height="5rem"
+                    width="95%"
+                    text="Claim"
+                    onClick={async () => {
                       if (contract) {
                         await contract.act(args);
                       } else {
@@ -413,10 +442,14 @@ const MCard = ({
                     }}
                   />
                 ) : (
-                  <Web3Button style={{
-                    width: "95%",
-                    height: "5rem"
-                  }} contractAddress="" action={() => { }} />
+                  <Web3Button
+                    style={{
+                      width: "95%",
+                      height: "5rem",
+                    }}
+                    contractAddress=""
+                    action={() => {}}
+                  />
                 )}
               </FlexColumn>
             </Box>
@@ -493,7 +526,7 @@ const MCard = ({
           <ConnectWallet
             dropdownPosition={{
               side: "bottom",
-              align: "center"
+              align: "center",
             }}
             style={{
               marginBottom: `${style.margin.md}`,

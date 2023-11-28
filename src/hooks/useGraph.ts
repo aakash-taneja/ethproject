@@ -16,6 +16,7 @@ const useGraph = () => {
     const audiodata = await fetchArweaveData(
       helperIPFS(res?.document?.raw?.metadata?.rawURI)
     );
+    console.log("res", res);
     setMData(res);
     setAudioUrl(helperIPFS(audiodata?.lens?.audio?.item));
     setAudioCover(helperIPFS(audiodata?.lens?.audio?.cover));
