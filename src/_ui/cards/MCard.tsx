@@ -1,4 +1,3 @@
-import ButtonNative from "@/_ui/buttons/ButtonNative";
 import FlexColumn from "@/_ui/flex/FlexColumn";
 import FlexRow from "@/_ui/flex/FlexRow";
 import TagNative from "@/_ui/tag/TagNative";
@@ -7,14 +6,23 @@ import { slugToLogoMapping } from "@/data/meta";
 import { helperIPFS, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
 import { style as gStyle, style } from "@/styles/StyledConstants";
-import { ConnectWallet, metamaskWallet, useConnect } from "@thirdweb-dev/react";
+import {
+  ConnectWallet,
+  Web3Button,
+  metamaskWallet,
+  useAddress,
+  useConnect,
+} from "@thirdweb-dev/react";
 import { Box, Button, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Loader1 from "../loader/Loader1";
 import ModalSlider from "../modal/ModalSlider";
 import Carousel from "./Carousel";
-import ReactPlayer from "react-player";
+import lenshubAbi from "../../data/lenshubAbi.json";
+import { AbiCoder } from "ethers/lib/utils";
+import { ethers } from "ethers";
+import ButtonNative from "../buttons/ButtonNative";
 
 type Props = {
   title?: string;
@@ -81,6 +89,48 @@ const MCard = ({
   const walletModal = useDisclosure();
   const connect = useConnect();
   const metamaskConfig = metamaskWallet();
+  const abiCoder = new AbiCoder();
+  const address = useAddress();
+  const [contract, setContract] = useState<any>()
+  const [args, setArgs] = useState<any>()
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (router.query.id) {
+        if (address) {
+          const id = router.query.id.toString().split("-");
+          const profileId = parseInt(id[0]);
+          const publicationId = parseInt(id[1]);
+          let actionModuleData = abiCoder.encode(["address"], [address]);
+          actionModuleData =
+            actionModuleData +
+            "0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+          setArgs([
+            profileId,
+            publicationId,
+            115352,
+            [],
+            [],
+            "0x0D90C58cBe787CD70B5Effe94Ce58185D72143fB",
+            actionModuleData,
+          ]);
+          console.log("args", args);
+        }
+        if (typeof window !== "undefined" && window.ethereum) {
+          const provider = new ethers.providers.Web3Provider(
+            window?.ethereum as ethers.providers.ExternalProvider
+          );
+          const signer = provider.getSigner();
+          setContract(new ethers.Contract(
+            "0xdb46d1dc155634fbc732f92e853b10b288ad5a1d",
+            lenshubAbi,
+            signer
+          ))
+        }
+        console.log("window.ethereum defined", contract);
+      }
+    }
+  }, [router, address]);
 
   const playAudio = (e: any) => {
     setIsPlaying(true);
@@ -147,10 +197,10 @@ const MCard = ({
           transitionProperty: "all",
           transitionDuration: "600ms",
         }}
-        // _hover={{
-        //   border: `${shadowOnHover && gStyle.card.border.meta}`,
-        //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
-        // }}
+      // _hover={{
+      //   border: `${shadowOnHover && gStyle.card.border.meta}`,
+      //   boxShadow: `${shadowOnHover && "-0.15px 0.15px 28px 0px #004AD9"}`,
+      // }}
       >
         {loading ? (
           <Loader1 />
@@ -240,9 +290,8 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
+                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                       width: "100%",
                     }}
                   >
@@ -265,9 +314,8 @@ const MCard = ({
                       display: "flex",
                       justifyContent: "center",
                       padding: "1rem",
-                      background: `${
-                        colorMode == "light" ? "#efefef" : "#000A24"
-                      }`,
+                      background: `${colorMode == "light" ? "#efefef" : "#000A24"
+                        }`,
                       width: "100%",
                     }}
                   >
@@ -332,8 +380,8 @@ const MCard = ({
                           ? description
                           : truncateString(description, 110)
                         : viewMore
-                        ? description
-                        : truncateString(description, 500)}
+                          ? description
+                          : truncateString(description, 500)}
 
                       {description?.length > 110 && showMore && (
                         // <span>
@@ -351,6 +399,24 @@ const MCard = ({
                       )}
                     </Text>
                   </>
+                )}
+              </FlexColumn>
+              <FlexColumn>
+                {address ? (
+                  <ButtonNative variant="state_default_hover" height="5rem" width="95%"
+                    text="Claim" onClick={async () => {
+                      if (contract) {
+                        await contract.act(args);
+                      } else {
+                        console.log("contract undefined", contract);
+                      }
+                    }}
+                  />
+                ) : (
+                  <Web3Button style={{
+                    width: "95%",
+                    height: "5rem"
+                  }} contractAddress="" action={() => { }} />
                 )}
               </FlexColumn>
             </Box>
@@ -423,8 +489,12 @@ const MCard = ({
           </FlexRow>
         }
       >
-        <FlexColumn height="300px" hrAlign="flex-start">
+        <FlexColumn height="150px" hrAlign="flex-start">
           <ConnectWallet
+            dropdownPosition={{
+              side: "bottom",
+              align: "center"
+            }}
             style={{
               marginBottom: `${style.margin.md}`,
               width: "100%",

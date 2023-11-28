@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <ThirdwebProvider activeChain="ethereum" clientId="e7c2ac7e9931a273c03ce80bba2dd8b5">
+      <ThirdwebProvider activeChain="polygon" clientId="e7c2ac7e9931a273c03ce80bba2dd8b5">
         <ChakraProvider theme={theme}>
           <Component {...pageProps} />
         </ChakraProvider>
