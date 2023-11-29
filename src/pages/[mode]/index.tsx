@@ -1,52 +1,72 @@
-"use client";
+import MCard from "@/_ui/cards/MCard";
+import FlexColumn from "@/_ui/flex/FlexColumn";
+import { style } from "@/styles/StyledConstants";
+import { Box, Image, useColorMode } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-import { Avatar, Box, Image, Text, useColorMode } from "@chakra-ui/react";
-import { useEffect } from "react";
-
-export default function LensEmbed() {
+const Search = () => {
   const router = useRouter();
-  // const { toggleColorMode } = useColorMode();
-  // console.log("theme is", router.query.theme);
+  const { colorMode } = useColorMode();
 
-  // useEffect(() => {
-  //   if (router.query.theme == "dark") {
-  //     toggleColorMode();
-  //   }
-  // }, []);
-
-  console.log("mode ", router.query.mode);
-
-  return (
-    <div
-      style={{
-        height: "100vh",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: `${
-          router.query.theme == "light" ? "rgba(255,255,255,1)" : "#030c1a"
-        }`,
-      }}
-    >
-      <Box
-        height={"95%"}
-        width={"50%"}
-        sx={{
-          "@media screen and (max-width: 950px)": {
-            width: "100%",
-            height: "100%",
-          },
-        }}
-      >
-        <iframe
-          src={`/embed?id=${router.query.id}&theme=${router.query.theme}&type=${router.query.type}&mode=${router.query.mode}`}
-          height={"100%"}
-          width={"100%"}
-          style={{ borderRadius: "0px" }}
-        />
+  const renderBody = () => {
+    return (
+      <Box overflowX="hidden">
+        <FlexColumn
+          hrAlign="flex-start"
+          vrAlign="flex-start"
+          padding="0rem 0rem"
+          height="100vh"
+        >
+          <Box
+            border={colorMode ? "" : style.card.border.default}
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            height="100%"
+            width={"100%"}
+            backgroundImage={
+              colorMode == "dark"
+                ? "url(/assets/icons/searchbg.svg)"
+                : "url(/assets/explore/searchbg_light.svg)"
+            }
+            display={"flex"}
+            alignItems={"center"}
+            flexDir={"column"}
+            justifyContent={"flex-start"}
+          >
+            <div
+              style={{
+                height: "100vh",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                height={"95%"}
+                width={"50%"}
+                sx={{
+                  "@media screen and (max-width: 950px)": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                }}
+              >
+                <MCard
+                  width={"50%"}
+                  colorMode={router.query.theme}
+                  left="25%!important"
+                />
+              </Box>
+            </div>
+          </Box>
+        </FlexColumn>
       </Box>
-    </div>
-  );
-}
+    );
+  };
+
+  return <>{renderBody()}</>;
+};
+
+export default Search;

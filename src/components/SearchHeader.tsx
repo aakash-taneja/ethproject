@@ -68,7 +68,7 @@ const SearchHeader = ({ options, height, hookSearch }: Props) => {
               style={{
                 height: height ? height : "5rem",
                 color: `${colorMode == "light" ? "#3d3d3d" : ""}`,
-                borderRadius: `${style.card.borderRadius.default}`,
+                borderRadius: `1rem`,
                 fontSize: `${style.font.h3}`,
                 paddingRight: `${style.padding.xl}`,
                 paddingLeft: `${style.padding.xxl}`,

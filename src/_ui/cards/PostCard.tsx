@@ -4,7 +4,7 @@ import FlexRow from "@/_ui/flex/FlexRow";
 import TagNative from "@/_ui/tag/TagNative";
 import { helperIPFS, truncateAddress, truncateString } from "@/helpers";
 import GlobalIcons from "@/styles/GlobalIcons";
-import { Avatar, Box, Image, Text, useColorMode } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Image, Text, useColorMode } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { style as gStyle, style } from "../../styles/StyledConstants";
@@ -89,14 +89,14 @@ const PostCard = ({
       shadowOnHover={true}
       onClick={onClick}
     >
-      <FlexRow
-        hrAlign="space-between"
+      <FlexColumn
+        hrAlign="flex-start"
         height="auto"
         vrAlign="flex-start"
         marginBottom="sm"
       >
-        <FlexColumn
-          width="70%"
+        <FlexRow
+          width="100%"
           height="auto"
           vrAlign="flex-start"
           padding="0% 3%"
@@ -104,121 +104,100 @@ const PostCard = ({
           {owner_name && (
             <FlexRow
               height="fit-content"
-              hrAlign="flex-start"
+              hrAlign="space-between"
               marginBottom={"xs"}
             >
-              <Avatar
-                src={owner_image ? owner_image : GlobalIcons["avatar-default"]}
-                size="sm"
-              />
-              <FlexColumn vrAlign="flex-start" marginLeft={"xxs"}>
+              <FlexRow hrAlign="flex-start" width="80%">
+                <Avatar
+                  src={
+                    owner_image ? owner_image : GlobalIcons["avatar-default"]
+                  }
+                  size="sm"
+                  marginRight={style.margin.xs}
+                />
+
                 <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
                   {truncateAddress(owner_name)}
                   {/* {owner_name} */}
                 </Text>
-                <Text color={colorMode == "light" ? "#282828" : ""} mb="0">
-                  {owner_heading}
-                </Text>
-              </FlexColumn>
+              </FlexRow>
+
+              <TagNative
+                icon={{
+                  align: "left",
+                  // slug: `${
+                  //   slug == "lens_post"
+                  //     ? "logo-Lens"
+                  //     : slug == "poap_nft"
+                  //     ? "logo-Poap"
+                  //     : slug == "ens_ethereum"
+                  //     ? "logo-Ens"
+                  //     : "logo-Sound.xyz"
+                  // }`,
+                  slug: `${slugToLogoMapping[slug].logo || "logo-Sound.xyz"}`,
+                }}
+                size="md"
+                value={slugToLogoMapping[slug].name}
+                lineHeight="1.5rem"
+              />
             </FlexRow>
           )}
-          <Text
-            color={colorMode == "light" ? "#282828" : ""}
-            className="m-b-0"
-            fontSize={"xl"}
-            fontWeight={600}
-            // marginTop={gStyle.margin["xxxs"]}
-          >
-            {title}
-          </Text>
-          {/* <Box width="15rem"> */}
-          {description && (
-            <>
-              <Text
-                color={colorMode == "light" ? "#282828" : ""}
-                className="m-b-0"
-                maxW={titleMaxw ? titleMaxw : "30rem"}
-                fontSize={"md"}
-                marginTop={gStyle.margin["xxs"]}
-              >
-                {image
-                  ? viewMore
-                    ? description
-                    : truncateString(description, 200)
-                  : viewMore
-                  ? description
-                  : truncateString(description, 500)}
-              </Text>
 
-              {showMore && (
-                <span>
-                  <Text
-                    color="blue"
-                    _hover={{ textDecoration: "underline", cursor: "pointer" }}
-                    onClick={() => {
-                      if (viewMore) {
-                        setViewMore(false);
-                      } else {
-                        setViewMore(true);
-                      }
-                    }}
-                  >
-                    {viewMore ? "View Less" : "View More"}
-                  </Text>
-                </span>
-              )}
-            </>
-          )}
           {/* </Box> */}
-        </FlexColumn>
-        <FlexColumn width="30%" vrAlign="flex-end">
-          <FlexRow hrAlign="space-between">
-            <TagNative
-              icon={{
-                align: "left",
-                // slug: `${
-                //   slug == "lens_post"
-                //     ? "logo-Lens"
-                //     : slug == "poap_nft"
-                //     ? "logo-Poap"
-                //     : slug == "ens_ethereum"
-                //     ? "logo-Ens"
-                //     : "logo-Sound.xyz"
-                // }`,
-                slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
-              }}
-              size="md"
-              value={slug}
-              lineHeight="1.5rem"
-            />
-            {/* <AudioPlayer /> */}
-            {/* {music && (
+        </FlexRow>
+        <FlexRow vrAlign="center">
+          <FlexColumn vrAlign="flex-start">
+            <Text
+              color={colorMode == "light" ? "#282828" : ""}
+              className="m-b-0"
+              fontSize={"xl"}
+              fontWeight={600}
+              // marginTop={gStyle.margin["xxxs"]}
+            >
+              {title}
+            </Text>
+            {/* <Box width="15rem"> */}
+            {description && (
               <>
-                <audio
-                  ref={audioRef}
-                  onEnded={handleAudioEnded}
-                  src={`https://arweave.net/${music}`}
-                ></audio>
-                {isPlaying ? (
-                  <Image
-                    src={GlobalIcons["icon-pause"]}
-                    onClick={(e) => {
-                      stopAudio(e);
-                    }}
-                    alt="icon-pause"
-                  />
-                ) : (
-                  <Image
-                    src={GlobalIcons["icon-play"]}
-                    onClick={(e) => {
-                      playAudio(e);
-                    }}
-                    alt="icon-play"
-                  />
+                <Text
+                  color={colorMode == "light" ? "#282828" : ""}
+                  className="m-b-0"
+                  maxW={titleMaxw ? titleMaxw : "30rem"}
+                  fontSize={"md"}
+                  marginTop={gStyle.margin["xxs"]}
+                >
+                  {image
+                    ? viewMore
+                      ? description
+                      : truncateString(description, 200)
+                    : viewMore
+                    ? description
+                    : truncateString(description, 500)}
+                </Text>
+
+                {showMore && (
+                  <span>
+                    <Text
+                      color="blue"
+                      _hover={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        if (viewMore) {
+                          setViewMore(false);
+                        } else {
+                          setViewMore(true);
+                        }
+                      }}
+                    >
+                      {viewMore ? "View Less" : "View More"}
+                    </Text>
+                  </span>
                 )}
               </>
-            )} */}
-          </FlexRow>
+            )}
+          </FlexColumn>
 
           {image && (
             <div
@@ -241,8 +220,8 @@ const PostCard = ({
               />
             </div>
           )}
-        </FlexColumn>
-      </FlexRow>
+        </FlexRow>
+      </FlexColumn>
 
       {musicplayer && (
         <>
