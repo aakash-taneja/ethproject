@@ -25,7 +25,6 @@ const MCard = ({ colorMode, width, left }: Props) => {
   const walletModal = useDisclosure();
   const router = useRouter();
   const hookSearch = useSearch();
-  const hookGraph = useGraph();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [metaRequest, setMetaRequest] = useState<any>();
@@ -36,7 +35,7 @@ const MCard = ({ colorMode, width, left }: Props) => {
         setMetaRequest({ id: router.query.id, type: router.query.type });
       }
     }
-  }, [router.query.id]);
+  }, [router.isReady,router.query.id,router.query.type]);
 
   // const playAudio = (e: any) => {
   //   setIsPlaying(true);

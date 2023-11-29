@@ -38,7 +38,7 @@ const SearchCol = ({ results, router, isLoading, next }: Props) => {
                   owner_name={result?.document?.modified?.owner}
                   onClick={async () => {
                     router.push(
-                      `/app/meta?id=${result?.document?.raw?.id}?type=lens_publication`
+                      `/app/meta?id=${result?.document?.raw?.id}&&type=lens_publication`
                     );
                   }}
                   width="100%"
