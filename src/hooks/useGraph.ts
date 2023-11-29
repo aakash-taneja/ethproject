@@ -8,10 +8,11 @@ const useGraph = () => {
   const [audioUrl, setAudioUrl] = useState<any>();
   const [audioCover, setAudioCover] = useState<any>();
 
-  const _fetch = async (id: any, type: any) => {
+  const _fetch = async (id: string, type: string) => {
     const data = {
       data: id,
     };
+    console.log("inside usegaph", type, data);
     const res = await graphQuery(type, data);
     const audiodata = await fetchArweaveData(
       helperIPFS(res?.document?.raw?.metadata?.rawURI)

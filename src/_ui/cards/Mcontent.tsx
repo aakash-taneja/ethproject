@@ -18,12 +18,12 @@ import lenshubAbi from "../../data/lenshubAbi.json";
 import { graphQuery } from "@/service/MetaService";
 
 type Props = {
-  metaId?: string;
-  metaType?: string;
-  hookGraph?: any;
+  metaId: string;
+  metaType: string;
+  // hookGraph?: any;
 };
 
-const Mcontent = ({ metaId, metaType, hookGraph }: Props) => {
+const Mcontent = ({ metaId, metaType }: Props) => {
   const [contract, setContract] = useState<any>();
   const [args, setArgs] = useState<any>();
   const [viewMore, setViewMore] = useState<boolean>(false);
@@ -33,14 +33,17 @@ const Mcontent = ({ metaId, metaType, hookGraph }: Props) => {
   const router = useRouter();
   const address = useAddress();
   const abiCoder = new AbiCoder();
+  const hookGraph = useGraph();
 
   const colorMode = router.query.theme;
+
   const modified = hookGraph?.mData?.document?.modified;
   const title = modified?.title;
   const description = modified?.desc;
   const media = modified?.media;
 
   useEffect(() => {
+    // console.log("posaph", hookGraph);
     const fetchData = async () => {
       if (router.isReady) {
         if (metaId) {
@@ -85,13 +88,14 @@ const Mcontent = ({ metaId, metaType, hookGraph }: Props) => {
               )
             );
           }
+          await hookGraph._fetch(metaId, metaType);
+
           // console.log("window.ethereum defined", contract);
         }
       }
     };
     fetchData();
-    hookGraph._fetch(metaId, metaType);
-  }, [router, address]);
+  }, [metaId, address, metaType]);
 
   const getActorProfileId = async (address: any) => {
     const data = {

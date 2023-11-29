@@ -118,7 +118,7 @@ const MCard = ({ colorMode }: Props) => {
             )}
             {router.query.mode == "meta" && (
               <Mcontent
-                hookGraph={hookGraph}
+                // hookGraph={hookGraph}
                 metaId={metaRequest?.id}
                 metaType={metaRequest?.type}
               />
