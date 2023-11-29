@@ -33,6 +33,7 @@ type Props = {
   shadowOnHover?: any;
   showMore?: boolean;
   metaName?: any;
+  owner_address?: any;
 };
 
 const PostCard = ({
@@ -42,6 +43,7 @@ const PostCard = ({
   description,
   owner_name,
   owner_heading,
+  owner_address,
   owner_image,
   action_name,
   action_type,
@@ -170,7 +172,7 @@ const PostCard = ({
           {/* </Box> */}
         </FlexColumn>
         <FlexColumn width="30%" vrAlign="flex-end">
-          <FlexRow hrAlign="flex-end">
+          <FlexRow hrAlign="space-between">
             <TagNative
               icon={{
                 align: "left",
@@ -186,11 +188,11 @@ const PostCard = ({
                 slug: `${slugToLogoMapping[slug] || "logo-Sound.xyz"}`,
               }}
               size="md"
-              value={metaName}
+              value={slug}
               lineHeight="1.5rem"
             />
             {/* <AudioPlayer /> */}
-            {music && (
+            {/* {music && (
               <>
                 <audio
                   ref={audioRef}
@@ -215,7 +217,7 @@ const PostCard = ({
                   />
                 )}
               </>
-            )}
+            )} */}
           </FlexRow>
 
           {image && (
