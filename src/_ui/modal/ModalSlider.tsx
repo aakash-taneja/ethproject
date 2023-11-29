@@ -17,6 +17,8 @@ type Props = {
   footer?: any;
   children?: any;
   colorMode?: any;
+  width?: any;
+  left?: any;
 };
 
 const ModalSlider = ({
@@ -26,6 +28,8 @@ const ModalSlider = ({
   header,
   footer,
   children,
+  width,
+  left,
 }: Props) => {
   return (
     <Drawer
@@ -47,6 +51,8 @@ const ModalSlider = ({
         }
         // borderRadius={style.modal.borderRadius}
         borderBottomRadius={"1.4rem"}
+        width={width}
+        left={left}
       >
         {header && (
           <DrawerHeader

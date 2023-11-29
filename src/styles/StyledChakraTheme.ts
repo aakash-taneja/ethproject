@@ -63,6 +63,7 @@ const theme = extendTheme({
         // borderLeft: `${style.modal.border.default} !important`,
         // borderRadius: `${style.modal.borderRadius}!important`,
         // width: "50%!important",
+        // left: "25%!important",
       },
       ".chakra-modal__body": {
         // background: `${style.modal.bg.contractModal}`,

@@ -15,12 +15,12 @@ import useSearch from "@/hooks/useSearch";
 import useGraph from "@/hooks/useGraph";
 
 type Props = {
-  slug?: any;
+  width?: any;
+  left?: any;
   colorMode?: any;
-  loading?: any;
 };
 
-const MCard = ({ colorMode }: Props) => {
+const MCard = ({ colorMode, width, left }: Props) => {
   const detailsModal = useDisclosure();
   const walletModal = useDisclosure();
   const router = useRouter();
@@ -161,6 +161,8 @@ const MCard = ({ colorMode }: Props) => {
         )}
       </Box>
       <ModalSlider
+        width={width}
+        left={left}
         event={detailsModal}
         colorMode={colorMode}
         header={
@@ -182,6 +184,8 @@ const MCard = ({ colorMode }: Props) => {
         </FlexColumn>
       </ModalSlider>
       <ModalSlider
+        width={width}
+        left={left}
         event={walletModal}
         colorMode={colorMode}
         header={

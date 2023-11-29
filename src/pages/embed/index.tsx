@@ -24,6 +24,8 @@ const Index = () => {
         }
       >
         <MCard
+          width={"100%"}
+          left="0px!important"
           // slug={hookGraph?.mData?.document?.slug}
           colorMode={router.query.theme}
           // loading={hookGraph?.isLoading}

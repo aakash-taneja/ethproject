@@ -53,7 +53,11 @@ const Search = () => {
                   },
                 }}
               >
-                <MCard colorMode={router.query.theme} />
+                <MCard
+                  width={"50%"}
+                  colorMode={router.query.theme}
+                  left="25%!important"
+                />
               </Box>
             </div>
           </Box>
