@@ -26,18 +26,7 @@ const Index = () => {
         <MCard
           width={"100%"}
           left="0px!important"
-          // slug={hookGraph?.mData?.document?.slug}
           colorMode={router.query.theme}
-          // loading={hookGraph?.isLoading}
-
-          // music={hookGraph?.mData?.meta?.data?.modified?.meta_audio?.substr(
-          //   5
-          // )}
-          // musicplayer={hookGraph?.mData?.meta?.data?.modified?.meta_audio}
-          // video={hookGraph?.mData?.meta?.data?.modified?.meta_video}
-          // video="https://ipfs.io/ipfs/bafybeihbbkfthpouunrprad6s73dqykwlasd7eznk3vrlh6cft7pr3y3ae"
-          // image={hookGraph?.mData?.meta?.data?.modified?.meta_image}
-          // carousel_images={sample_images}
         />
       </Box>
     </FlexColumn>

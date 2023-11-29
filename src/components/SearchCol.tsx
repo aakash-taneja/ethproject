@@ -12,31 +12,36 @@ type Props = {
 };
 
 const SearchCol = ({ results, router, isLoading, next }: Props) => {
+  console.log("results", results);
   return (
     <>
       <FlexColumn>
         {/* {!isLoading && !results?.length && <EmptyCard />} */}
-        {results?.length > 0 && (
+        {results && (
           <FlexColumn width="100%">
-            {results?.map((item: any, index: any) => (
-              <FlexRow key={index} hrAlign="flex-start" marginBottom="xs">
-                <PostCard
-                  // title={item?.meta?.data?.modified?.meta_title}
-                  key={index}
-                  image={item?.meta?.data?.modified?.meta_image}
-                  metaName={item?.meta_schema?.name}
-                  slug={item?.meta?.slug}
-                  description={item?.meta?.data?.modified?.meta_description}
-                  title={item?.meta?.data?.ipfs?.contentURI?.name}
-                  owner_name={item?.metaOwner}
-                  onClick={() => {
-                    router.push(`/search/meta/${item?._id}`);
-                  }}
-                  width="100%"
-                />
-              </FlexRow>
-            ))}
-            {!isLoading && (
+            <FlexRow hrAlign="flex-start" marginBottom="xs">
+              <PostCard
+                // title={item?.meta?.data?.modified?.meta_title}
+
+                // image={results?.modified?.media}
+                metaName={results?.modified?.name}
+                slug={results?.modified?.tokenId}
+                description={results?.modified?.desc}
+                title={results?.modified?.name}
+                owner_name={results?.modified?.name}
+                // onClick={() => {
+                //   router.push(`/search/meta/${results?._id}`);
+                // }}
+                width="100%"
+              />
+            </FlexRow>
+            {/* {results?.map((item: any, index: any) => {
+              console.log("item", item);
+              return (
+                
+              );
+            })} */}
+            {/* {!isLoading && (
               <ButtonNative
                 text="Display More Results"
                 variant="state_empty_brand_to_solid_brand"
@@ -44,7 +49,7 @@ const SearchCol = ({ results, router, isLoading, next }: Props) => {
                 onClick={next}
                 borderColor="#2448c7"
               />
-            )}
+            )} */}
           </FlexColumn>
         )}
         {isLoading && (

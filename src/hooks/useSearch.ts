@@ -34,18 +34,18 @@ const useSearch = () => {
     }
 
     let res = await queryResolver(query);
-    console.log("check search results -> query", searchResults);
-    if (res.data) {
-      let newResults =
-        next && searchResults
-          ? {
-              ...searchResults,
-              metas: searchResults?.metas
-                ? [...searchResults.metas, ...res?.data?.metas]
-                : res?.data?.metas,
-            }
-          : res?.data;
-      setSearchResults(newResults);
+    // console.log("check search results -> query", res.data);
+    if (res) {
+      // let newResults =
+      //   next && searchResults
+      //     ? {
+      //         ...searchResults,
+      //         metas: searchResults?.metas
+      //           ? [...searchResults.metas, ...res?.data?.metas]
+      //           : res?.data?.metas,
+      //       }
+      //     : res?.data;
+      setSearchResults(res);
       if (next) {
         setPage(page + 1);
       } else {

@@ -45,7 +45,7 @@ const Msearch = ({ hookSearch }: Props) => {
                         });
                       }}
                       isLoading={hookSearch?.isLoading}
-                      results={hookSearch?.searchResults?.metas}
+                      results={hookSearch?.searchResults}
                       router={router}
                     />
                   </Box>
