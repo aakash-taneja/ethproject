@@ -1,4 +1,10 @@
-import { Box, Image, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Text,
+  useColorMode,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import FlexRow from "../flex/FlexRow";
 import TagNative from "../tag/TagNative";
@@ -36,7 +42,7 @@ const Mcontent = ({ metaId, metaType }: Props) => {
   const abiCoder = new AbiCoder();
   const hookGraph = useGraph();
 
-  const colorMode = router.query.theme;
+  const { colorMode } = useColorMode();
 
   const modified = hookGraph?.mData?.document?.modified;
   const title = modified?.title;
@@ -284,6 +290,7 @@ const Mcontent = ({ metaId, metaType }: Props) => {
                   height: "5rem",
                 }}
                 contractAddress=""
+                theme={colorMode == "light" ? "light" : "dark"}
                 action={() => {}}
               />
             )}

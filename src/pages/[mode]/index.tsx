@@ -1,12 +1,15 @@
 import MCard from "@/_ui/cards/MCard";
 import FlexColumn from "@/_ui/flex/FlexColumn";
+import FlexRow from "@/_ui/flex/FlexRow";
+import GlobalIcons from "@/styles/GlobalIcons";
 import { style } from "@/styles/StyledConstants";
 import { Box, Image, useColorMode } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const Search = () => {
   const router = useRouter();
-  const { colorMode } = useColorMode();
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const renderBody = () => {
     return (
@@ -34,6 +37,28 @@ const Search = () => {
             flexDir={"column"}
             justifyContent={"flex-start"}
           >
+            <Box
+              position={"fixed"}
+              right={"2rem"}
+              top={"1rem"}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                toggleColorMode();
+              }}
+              width={"fit-content"}
+            >
+              <Image
+                alt="icon"
+                src={
+                  colorMode == "light"
+                    ? GlobalIcons["icon-dark-mode"]
+                    : GlobalIcons["icon-light-mode"]
+                }
+                height="2rem"
+                width="3rem"
+                marginLeft={style.margin.xxs}
+              />
+            </Box>
             <div
               style={{
                 height: "100vh",
@@ -55,7 +80,7 @@ const Search = () => {
               >
                 <MCard
                   width={"50%"}
-                  colorMode={router.query.theme}
+                  colorMode={colorMode}
                   left="25%!important"
                 />
               </Box>
