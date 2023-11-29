@@ -15,10 +15,6 @@ const useSearch = () => {
     setPage(0);
   }, []);
 
-  useEffect(() => {
-    //console.log("check search results", searchResults);
-  }, searchResults);
-
   const handleQuery = async (params: SearchInterface) => {
     const { searchQuery, category, slug, owner, limit, next } = params;
     setIsLoading(true);

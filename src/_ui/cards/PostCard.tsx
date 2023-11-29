@@ -223,6 +223,7 @@ const PostCard = ({
               style={{
                 height: "60%",
                 display: "flex",
+                width: "100%",
                 justifyContent: "flex-end",
                 marginBottom: `${style.margin.sm}`,
                 marginTop: `${style.margin.sm}`,
@@ -231,7 +232,7 @@ const PostCard = ({
               <Image
                 src={helperIPFS(image)}
                 alt="coverImage"
-                width={"min-content"}
+                width={"100%"}
                 objectFit={"cover"}
                 borderRadius={gStyle.card.borderRadius.default}
                 maxHeight="8rem"
