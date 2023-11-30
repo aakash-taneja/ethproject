@@ -1,5 +1,12 @@
 "use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return <></>;
+  const { push } = useRouter();
+
+  useEffect(() => {
+    push("/search");
+  }, []);
+  return <p></p>;
 }
