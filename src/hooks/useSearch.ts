@@ -9,7 +9,7 @@ const useSearch = () => {
   const router = useRouter();
   const searchRef = useRef(null);
   const [searchResults, setSearchResults] = useState<any>();
-  const [isLoading, setIsLoading] = useState<any>(true);
+  const [isLoading, setIsLoading] = useState<any>(false);
   let [page, setPage] = useState<any>();
   useEffect(() => {
     setPage(0);
@@ -17,6 +17,7 @@ const useSearch = () => {
 
   const handleQuery = async (params: SearchInterface) => {
     const { searchQuery, category, slug, owner, limit, next } = params;
+    setSearchResults(undefined)
     setIsLoading(true);
     let query: any = {
       searchQuery: searchQuery,
@@ -30,7 +31,6 @@ const useSearch = () => {
     }
 
     let res = await queryResolver(query);
-    // console.log("check search results -> query", res.data);
     if (res) {
       // let newResults =
       //   next && searchResults
@@ -47,6 +47,9 @@ const useSearch = () => {
       } else {
         setPage(1);
       }
+    }
+    else if (res == null){
+      setSearchResults(null)
     }
     setIsLoading(false);
   };
@@ -70,11 +73,11 @@ const useSearch = () => {
       let newResults =
         next && searchResults
           ? {
-              ...searchResults,
-              metas: searchResults?.metas
-                ? [...searchResults.metas, ...res?.data]
-                : res?.data,
-            }
+            ...searchResults,
+            metas: searchResults?.metas
+              ? [...searchResults.metas, ...res?.data]
+              : res?.data,
+          }
           : { metas: res?.data };
       setSearchResults(newResults);
       if (next) {
