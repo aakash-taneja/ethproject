@@ -1,7 +1,7 @@
 import SearchCol from "@/components/SearchCol";
 import SearchHeader from "@/components/SearchHeader";
 import { style } from "@/styles/StyledConstants";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import FlexColumn from "../flex/FlexColumn";
 import Loader1 from "../loader/Loader1";
@@ -21,7 +21,8 @@ const Msearch = ({ hookSearch }: Props) => {
       </Box>
       <Box marginTop={style.margin.sm} height={"85%"} overflowY={"scroll"}>
         {!hookSearch.isLoading ?
-          (hookSearch?.searchResults !== undefined && (
+          (<>
+            {hookSearch?.searchResults !== undefined && (
               <FlexColumn
                 hrAlign="flex-start"
                 vrAlign="flex-start"
@@ -53,7 +54,13 @@ const Msearch = ({ hookSearch }: Props) => {
                   </>
                 </Box>
               </FlexColumn>
-            )) : (
+            )}
+            {(hookSearch?.searchResults === null && (
+              <Box>
+                <Text>No results found</Text>
+              </Box>
+            ))}
+          </>) : (
             <FlexColumn>
               <Loader1 />
             </FlexColumn>

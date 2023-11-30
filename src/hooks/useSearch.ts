@@ -31,7 +31,6 @@ const useSearch = () => {
     }
 
     let res = await queryResolver(query);
-    // console.log("check search results -> query", res.data);
     if (res) {
       // let newResults =
       //   next && searchResults
@@ -48,6 +47,9 @@ const useSearch = () => {
       } else {
         setPage(1);
       }
+    }
+    else if (res == null){
+      setSearchResults(null)
     }
     setIsLoading(false);
   };
