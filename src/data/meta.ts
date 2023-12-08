@@ -8,7 +8,7 @@ export const slugToLogoMapping: Record<string, any> = {
     logo: "logo-Lens",
     name: "Lens",
   },
-  lens_profile: {
+  lens_profile_for_handle: {
     logo: "logo-Lens",
     name: "Lens",
   },
