@@ -35,7 +35,7 @@ const MCard = ({ colorMode, width, left }: Props) => {
         setMetaRequest({ id: router.query.id, type: router.query.type });
       }
     }
-  }, [router.isReady,router.query.id,router.query.type]);
+  }, [router.isReady, router.query.id, router.query.type]);
 
   // const playAudio = (e: any) => {
   //   setIsPlaying(true);
